@@ -1,8 +1,3 @@
-# Developing a Single Page App with FastAPI and React
-
-### Want to learn how to build this?
-
-Check out the [post](https://testdriven.io/blog/fastapi-react/).
 
 ## Want to use this project?
 
@@ -24,8 +19,8 @@ Check out the [post](https://testdriven.io/blog/fastapi-react/).
 
     ```sh
     $ cd frontend
-    $ npm install
-    $ npm run start
+    $ pnpm install
+    $ pnpm run dev
     ```
 
     Navigate to [http://localhost:3000](http://localhost:3000)
