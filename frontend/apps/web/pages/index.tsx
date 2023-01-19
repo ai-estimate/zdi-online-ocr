@@ -1,10 +1,13 @@
-import { Button } from "ui";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 
-export default function Web() {
-  return (
-    <div>
-      <h1>Web</h1>
-      <Button />
-    </div>
-  );
-}
+// eslint-disable-next-line react/display-name
+const IndexPage = React.memo(() => {
+  const router = useRouter();
+  useEffect(() => {
+    router.replace("/home");
+  }, []);
+  return null;
+});
+
+export default IndexPage;

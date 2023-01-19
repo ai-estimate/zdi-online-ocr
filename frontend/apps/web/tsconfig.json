@@ -1,5 +1,23 @@
 {
   "extends": "tsconfig/nextjs.json",
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "baseUrl": "",
+    "paths": {
+      "src/*": ["src/*"],
+      "components/*": ["src/views/Home/components/*"],
+      "lib/*": ["lib/*"],
+      "styles/*": ["styles/*"],
+      "hooks/*": ["src/hooks/*"],
+      "views/*": ["src/views/*"],
+      "utils/*": ["src/utils/*"],
+      "config/*": ["config/*"],
+      "pubsub/*": ["pubsub/*"],
+      "@redux/*": ["@redux/*"]
+    },
+    "incremental": true,
+    "target": "es5",
+    "lib": ["es5", "dom"]
+  }
 }
