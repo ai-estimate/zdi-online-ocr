@@ -9,7 +9,7 @@
       "components/*": ["src/views/Home/components/*"],
       "lib/*": ["lib/*"],
       "styles/*": ["styles/*"],
-      "hooks/*": ["src/hooks/*"],
+      "hooks/*": ["src/components/hooks/*"],
       "views/*": ["src/views/*"],
       "utils/*": ["src/utils/*"],
       "config/*": ["config/*"],

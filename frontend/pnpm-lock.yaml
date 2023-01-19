@@ -56,12 +56,14 @@ importers:
       axios: ^1.2.3
       eslint: 7.32.0
       eslint-config-custom: workspace:*
+      final-form: ^4.20.8
       next: ^13.1.1
       next-redux-wrapper: ^8.1.0
       notistack: ^2.0.8
       react: 18.2.0
       react-dom: 18.2.0
       react-dropzone: ^14.2.3
+      react-final-form: ^6.5.9
       react-redux: ^8.0.5
       redux: ^4.2.0
       redux-persist: ^6.0.0
@@ -78,12 +80,14 @@ importers:
       '@reduxjs/toolkit': 1.9.1_k4ae6lp43ej6mezo3ztvx6pykq
       '@zdi/mui': link:../../packages/mui
       axios: 1.2.3
+      final-form: 4.20.8
       next: 13.1.2_23e7ztf2chqi3ri6onem3l5mii
       next-redux-wrapper: 8.1.0_y34iadpuipqk5cxypqrh4vrr4i
       notistack: 2.0.8_gczj3z5lfgzpzk2tljsi7rjln4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-dropzone: 14.2.3_react@18.2.0
+      react-final-form: 6.5.9_wgqxtrhlzhmon3nfoyvijndp44
       react-redux: 8.0.5_gm3gubmwja4o7q6fr6adx3fpz4
       redux: 4.2.0
       redux-persist: 6.0.0_react@18.2.0+redux@4.2.0
@@ -2561,6 +2565,12 @@ packages:
     dependencies:
       to-regex-range: 5.0.1
 
+  /final-form/4.20.8:
+    resolution: {integrity: sha512-knyoRbK42XvZOwfElVSZEfE9licdOmgLLUfPSuxJOl0UhjYT1HiBaHZlfYnwqmvo1H9ucNGyXDHoUP0vI0474g==}
+    dependencies:
+      '@babel/runtime': 7.20.7
+    dev: false
+
   /find-root/1.1.0:
     resolution: {integrity: sha512-NKfW6bec6GfKc0SGx1e07QZY9PE99u0Bft/0rzSD5k3sO/vwkVUpDUKVm5Gpp5Ue3YfShPFTX2070tDs5kB9Ng==}
     dev: false
@@ -3731,6 +3741,17 @@ packages:
 
   /react-fast-compare/3.2.0:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
+    dev: false
+
+  /react-final-form/6.5.9_wgqxtrhlzhmon3nfoyvijndp44:
+    resolution: {integrity: sha512-x3XYvozolECp3nIjly+4QqxdjSSWfcnpGEL5K8OBT6xmGrq5kBqbA6+/tOqoom9NwqIPPbxPNsOViFlbKgowbA==}
+    peerDependencies:
+      final-form: ^4.20.4
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@babel/runtime': 7.20.7
+      final-form: 4.20.8
+      react: 18.2.0
     dev: false
 
   /react-infinite-scroll-component/6.1.0_react@18.2.0:
