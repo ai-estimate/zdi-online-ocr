@@ -2,20 +2,16 @@ import React from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import { useDropzone } from "react-dropzone";
 
-const Home: React.FC = ({ input, duplicate }: any) => {
-  const onDrop = React.useCallback((files: any) => {
-    if (files.length > 0) {
-      input.onChange(files[0]);
-    }
-  }, []);
-  // const { getRootProps, getInputProps, isDragActive } = useDropzone({
-  //   onDrop,
-  //   accept: {
-  //     "image/*": [".png", ".jpg", ".jpeg", ".bmp"],
-  //   },
-  //   maxFiles: 1,
-  // });
-  const { getRootProps, getInputProps, open } = useDropzone({ noClick: true });
+// eslint-disable-next-line react/display-name
+const Home: React.FC<any> = (props) => {
+  const { getRootProps, getInputProps, open, acceptedFiles } = useDropzone({
+    noClick: true,
+    accept: {
+      "image/*": [".png", ".jpg", ".jpeg", ".bmp", ".pdf"],
+    },
+  });
+  const files = acceptedFiles;
+  console.log(files);
 
   return (
     <Stack flex={1} flexDirection="column" padding={10} {...getRootProps()}>
@@ -49,6 +45,15 @@ const Home: React.FC = ({ input, duplicate }: any) => {
         <Stack flex={2}>
           <Typography variant="h6" flexDirection="column" p={1}>
             2 STEP - Language and output format
+          </Typography>
+          <Typography variant="h6" flexDirection="column" p={1}>
+            {files?.map((file, i) => {
+              return (
+                <div key={i}>
+                  {file?.name} - {file?.size} bytes
+                </div>
+              );
+            })}
           </Typography>
         </Stack>
         <Stack flex={1}>
