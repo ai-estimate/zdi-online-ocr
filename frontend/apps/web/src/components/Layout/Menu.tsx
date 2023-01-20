@@ -35,13 +35,10 @@ const Menu = React.memo(() => {
 
 const StyledButtonMenu: any = styled(Button)`
   && {
-    .MuiPaper-root {
-      background-color: #18a0fb;
-    }
     padding: 3px 16px;
     text-transform: inherit;
     border-radius: ${(p: any) => (p.selected ? "4px 4px 0px 0px" : "0px")};
-    color: ${(p: any) => (p.selected ? "black" : "white")};
+    color: ${(p: any) => (p.selected ? "#006064" : "white")};
     background-color: ${(p: any) => (p.selected ? "white" : "transparent")};
     &:hover {
       text-decoration: underline;

@@ -6,6 +6,9 @@
   --left-menu-width: 320px;
   --sidebar-form-width: 0px;
   --ocr-sidebar-left: 48px;
+  --color-D2D1D6: #d2d1d6;
+  --primary-color: #006064;
+  --border-radius-default: 4px;
   --font-Inter: "Inter", sans-serif, DefaultFont;
 }
 
@@ -34,7 +37,9 @@ body {
     text-decoration: none;
   }
 }
-
+span {
+  color: var(--primary-color);
+}
 #z1-map-wrapper {
   display: flex;
   overflow: hidden;

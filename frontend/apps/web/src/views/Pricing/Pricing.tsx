@@ -74,13 +74,13 @@ const ZDITableCell = (props: IProps) => {
 const StyledTableRowFt = styled(TableRow)`
   && {
     .MuiTableCell-root {
-      background-color: #94d2f6 !important;
+      background-color: #e0f7fa !important;
     }
   }
 `;
 const StyledTableRow = styled(TableRow)(() => ({
   "&:nth-of-type(even)": {
-    backgroundColor: "#94d2f6",
+    backgroundColor: "#e0f7fa",
   },
   // hide last border
   "&:last-child td, &:last-child th": {

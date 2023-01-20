@@ -1,37 +1,37 @@
-import {createTheme} from '@mui/material/styles';
-import {red} from '@mui/material/colors';
+import { createTheme } from "@mui/material/styles";
+import { red } from "@mui/material/colors";
 
-const PRIMARY_TEXT_COLOR = '#15294B';
+const PRIMARY_TEXT_COLOR = "#006064";
 // Create a theme instance.
 export default createTheme({
   typography: {
     fontFamily: `"Inter", sans-serif, DefaultFont`,
     button: {
-      textTransform: 'none',
+      textTransform: "none",
     },
     h2: {
       fontWeight: 500,
       fontSize: 16,
-      lineHeight: '24px',
+      lineHeight: "24px",
     },
     body1: {
-      fontSize: '0.875rem',
-      lineHeight: '20px',
+      fontSize: "0.875rem",
+      lineHeight: "20px",
     },
   },
   palette: {
     primary: {
-      main: '#2A7DE1',
-      contrastText: '#fff',
+      main: "#0097a7",
+      contrastText: "#fff",
     },
     secondary: {
-      main: '#94d2f6',
+      main: "#00796b",
     },
     error: {
       main: red.A400,
     },
     background: {
-      default: '#FAFBFB',
+      default: "#FAFBFB",
     },
     text: {
       primary: PRIMARY_TEXT_COLOR,
@@ -46,11 +46,11 @@ export default createTheme({
       },
       variants: [
         {
-          props: {variant: 'sidebarTitle'},
+          props: { variant: "sidebarTitle" },
           style: {
-            color: '#505f79',
-            fontSize: '0.875rem',
-            lineHeight: '20px',
+            color: "#505f79",
+            fontSize: "0.875rem",
+            lineHeight: "20px",
           },
         },
       ],
@@ -65,18 +65,18 @@ export default createTheme({
     MuiInputBase: {
       styleOverrides: {
         root: {
-          '.MuiOutlinedInput-notchedOutline': {
+          ".MuiOutlinedInput-notchedOutline": {
             borderWidth: 2,
-            borderColor: '#EBEDF0',
+            borderColor: "#EBEDF0",
           },
-          '&&:hover:not(.Mui-focused)': {
+          "&&:hover:not(.Mui-focused)": {
             // backgroundColor: '#F5F6F7',
-            '.MuiOutlinedInput-notchedOutline': {
-              borderColor: '#C2C7D0',
+            ".MuiOutlinedInput-notchedOutline": {
+              borderColor: "#C2C7D0",
             },
           },
-          '&&.Mui-focused': {
-            borderColor: '#2A7DE1',
+          "&&.Mui-focused": {
+            borderColor: "#2A7DE1",
           },
         },
       },
@@ -84,9 +84,9 @@ export default createTheme({
     MuiListItemButton: {
       styleOverrides: {
         root: {
-          padding: '10px 8px',
-          '&:hover': {
-            backgroundColor: '#F5F6F7',
+          padding: "10px 8px",
+          "&:hover": {
+            backgroundColor: "#F5F6F7",
           },
         },
       },
@@ -94,62 +94,62 @@ export default createTheme({
     MuiButton: {
       variants: [
         {
-          props: {variant: 'z1primary'},
+          props: { variant: "z1primary" },
           style: {
-            textTransform: 'none',
-            color: '#fff',
-            backgroundColor: '#3F85F3',
-            '&:hover': {
-              backgroundColor: '#609AF5',
-              color: '#FAFBFB',
+            textTransform: "none",
+            color: "#fff",
+            backgroundColor: "#00bcd4",
+            "&:hover": {
+              backgroundColor: "#0097a7",
+              color: "#FAFBFB",
             },
-            '&.Mui-disabled': {
-              color: '#A6AEBB',
-              backgroundColor: '#F5F6F7',
+            "&.Mui-disabled": {
+              color: "#A6AEBB",
+              backgroundColor: "#F5F6F7",
               opacity: 0.7,
             },
-            '&:active': {
-              backgroundColor: '#2C5DAA',
+            "&:active": {
+              backgroundColor: "#006064",
             },
           },
         },
         {
-          props: {variant: 'z1cancel'},
+          props: { variant: "z1cancel" },
           style: {
-            textTransform: 'none',
+            textTransform: "none",
             fontWeight: 400,
-            border: '1px solid #EBEDF0',
-            color: '#15294B',
-            '&:hover': {
-              border: '1px solid #C2C7D0',
+            border: "1px solid #EBEDF0",
+            color: "#15294B",
+            "&:hover": {
+              border: "1px solid #C2C7D0",
             },
-            '&.Mui-disabled': {
-              color: '#A6AEBB',
-              border: '1px solid #F5F6F7',
+            "&.Mui-disabled": {
+              color: "#A6AEBB",
+              border: "1px solid #F5F6F7",
               opacity: 0.7,
             },
-            '&:active': {
-              border: '1px solid #C2C7D0',
+            "&:active": {
+              border: "1px solid #C2C7D0",
             },
           },
         },
         {
-          props: {variant: 'z1danger'},
+          props: { variant: "z1danger" },
           style: {
-            textTransform: 'none',
-            color: '#fff',
-            backgroundColor: '#FF2D3B',
-            '&:hover': {
-              backgroundColor: '#FF515C',
-              color: '#FAFBFB',
+            textTransform: "none",
+            color: "#fff",
+            backgroundColor: "#FF2D3B",
+            "&:hover": {
+              backgroundColor: "#FF515C",
+              color: "#FAFBFB",
             },
-            '&.Mui-disabled': {
-              color: '#A6AEBB',
-              backgroundColor: '#F5F6F7',
+            "&.Mui-disabled": {
+              color: "#A6AEBB",
+              backgroundColor: "#F5F6F7",
               opacity: 0.7,
             },
-            '&:active': {
-              backgroundColor: '#B31F29',
+            "&:active": {
+              backgroundColor: "#B31F29",
             },
           },
         },
@@ -157,13 +157,13 @@ export default createTheme({
     },
     MuiTableHead: {
       styleOverrides: {
-        root: ({theme}) => ({
-          '&& > .MuiTableRow-root': {
-            '& .MuiTableCell-root': {
+        root: ({ theme }) => ({
+          "&& > .MuiTableRow-root": {
+            "& .MuiTableCell-root": {
               fontWeight: 500,
               fontSize: theme.typography.pxToRem(14),
-              borderBottomColor: '#EBEDF0',
-              backgroundColor: '#fff',
+              borderBottomColor: "#EBEDF0",
+              backgroundColor: "#fff",
             },
           },
         }),
@@ -171,14 +171,14 @@ export default createTheme({
     },
     MuiTableRow: {
       styleOverrides: {
-        root: ({theme}) => ({
-          '&& > .MuiTableCell-root': {
-            borderBottomColor: '#EBEDF0',
+        root: ({ theme }) => ({
+          "&& > .MuiTableCell-root": {
+            borderBottomColor: "#EBEDF0",
             lineHeight: theme.typography.pxToRem(20),
           },
-          '&&:last-child': {
-            '&& > td.MuiTableCell-root': {
-              borderBottomColor: 'transparent',
+          "&&:last-child": {
+            "&& > td.MuiTableCell-root": {
+              borderBottomColor: "transparent",
             },
           },
         }),
@@ -186,17 +186,17 @@ export default createTheme({
     },
     MuiFormLabel: {
       styleOverrides: {
-        root: ({theme}) => ({
-          '&.MuiFormLabel-colorPrimary': {
-            color: '#15294B',
-            letterSpacing: '-0.02em',
+        root: ({ theme }) => ({
+          "&.MuiFormLabel-colorPrimary": {
+            color: "#15294B",
+            letterSpacing: "-0.02em",
             fontWeight: 500,
             fontSize: theme.typography.pxToRem(12),
             lineHeight: theme.typography.pxToRem(18),
-            transform: 'none',
+            transform: "none",
             marginBottom: theme.spacing(0.5),
           },
-          '& > .MuiFormLabel-asterisk': {
+          "& > .MuiFormLabel-asterisk": {
             color: red[500],
           },
         }),
@@ -204,48 +204,48 @@ export default createTheme({
     },
     MuiTextField: {
       defaultProps: {
-        variant: 'standard',
-        size: 'small',
+        variant: "standard",
+        size: "small",
         InputLabelProps: {
           shrink: true,
         },
       },
       styleOverrides: {
-        root: ({theme, variant}) => {
-          if (variant !== 'standard') return {};
+        root: ({ theme, variant }) => {
+          if (variant !== "standard") return {};
           return {
-            '& .MuiInputBase-root': {
+            "& .MuiInputBase-root": {
               minHeight: 0,
-              '&:before': {
-                borderBottom: '0 !important',
+              "&:before": {
+                borderBottom: "0 !important",
               },
-              '&:after': {
-                borderBottom: '0 !important',
+              "&:after": {
+                borderBottom: "0 !important",
               },
-              '&.Mui-focused': {
-                '& .MuiInputBase-input': {
-                  borderColor: '#2A7DE1',
+              "&.Mui-focused": {
+                "& .MuiInputBase-input": {
+                  borderColor: "#2A7DE1",
                 },
               },
             },
-            '& .MuiInputBase-input': {
-              backgroundColor: '#FFFFFF',
-              border: '1px solid #ced4da',
+            "& .MuiInputBase-input": {
+              backgroundColor: "#FFFFFF",
+              border: "1px solid #ced4da",
               borderRadius: 4,
               padding: theme.spacing(1),
               marginTop: theme.spacing(0.5),
-              color: '#15294B',
+              color: "#15294B",
               fontWeight: 400,
               fontSize: theme.typography.pxToRem(14),
               lineHeight: theme.typography.pxToRem(20),
             },
-            '& .MuiFormLabel-root.MuiInputLabel-sizeSmall': {
-              color: '#15294B',
-              letterSpacing: '-0.02em',
+            "& .MuiFormLabel-root.MuiInputLabel-sizeSmall": {
+              color: "#15294B",
+              letterSpacing: "-0.02em",
               fontWeight: 500,
               fontSize: theme.typography.pxToRem(12),
               lineHeight: theme.typography.pxToRem(18),
-              transform: 'none',
+              transform: "none",
             },
           };
         },
@@ -253,14 +253,14 @@ export default createTheme({
     },
   },
 });
-declare module '@mui/material/Button' {
+declare module "@mui/material/Button" {
   interface ButtonPropsVariantOverrides {
     z1primary: true;
     z1cancel: true;
     z1danger: true;
   }
 }
-declare module '@mui/material/Typography' {
+declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     sidebarTitle: true;
   }

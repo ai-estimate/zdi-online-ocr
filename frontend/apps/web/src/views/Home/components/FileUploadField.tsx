@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-import { IconButton, Paper } from "@mui/material";
+import { IconButton, Paper, Stack, Typography } from "@mui/material";
 
 // eslint-disable-next-line react/display-name
 export const FileUploadField = React.memo(({ input, duplicate }: any) => {
@@ -46,24 +46,26 @@ export const FileUploadField = React.memo(({ input, duplicate }: any) => {
             </StyledRemove>
           </div>
         )}
-        <div {...getRootProps()}>
+        <div className="presentation" {...getRootProps()}>
           <input {...getInputProps()} />
           {isDragActive ? (
-            <p>Drop the files here ...</p>
+            <div className="dropzone-content">
+              <Typography variant="h6">Drop the files here ...</Typography>
+            </div>
           ) : url ? (
             <div className="browse">
-              {/* <UploadFileIcon />
-              <span>Browse...</span> */}
+              <UploadFileIcon color="secondary" />
+              <Typography>Browse...</Typography>
             </div>
           ) : (
             <div className="dropzone-content">
-              <UploadFileIcon width={50} height={50} />
-              <p className="drag-text">
-                Drag and drop a JPG, PNG, or GIF file.{" "}
-              </p>
+              <UploadFileIcon color="secondary" />
+              <Typography variant="h6">
+                Drag and drop a JPG, PNG, or PDF file.{" "}
+              </Typography>
               <div className="browse">
-                <UploadFileIcon />
-                <span>Browse...</span>
+                <UploadFileIcon color="secondary" />
+                <Typography variant="h6">Browse...</Typography>
               </div>
             </div>
           )}
@@ -82,6 +84,18 @@ const StyledRemove = styled.div`
   }
 `;
 const StyledPaper = styled(Paper)`
+  && {
+    padding: 2rem;
+    background-color: #f8f8f8;
+    border-radius: var(--border-radius-default);
+    min-height: 350px;
+    max-height: fit-content;
+    border: 3px dashed var(--color-D2D1D6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
   .btn-delete {
     background-color: #ecf5fa;
     color: #f00;
@@ -100,9 +114,15 @@ const StyledPaper = styled(Paper)`
     }
   }
   .dropzone {
-    padding: 10px;
-    max-width: 440px;
-    max-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    gap: 10px;
+    height: 100%;
+    cursor: pointer;
     .MuiDropzoneArea-root {
       min-height: 150px;
       .MuiTypography-root {
@@ -111,6 +131,10 @@ const StyledPaper = styled(Paper)`
         line-height: 14px;
       }
     }
+  }
+  .presentation {
+    width: 100%;
+    height: 100%;
   }
   .image-preview {
     max-width: 100%;
@@ -129,6 +153,7 @@ const StyledPaper = styled(Paper)`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: 100%;
     p {
       margin: 0px;
     }

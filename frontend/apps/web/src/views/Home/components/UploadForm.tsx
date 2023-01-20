@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Form, FormRenderProps, Field } from "react-final-form";
-import CloseIcon from "@mui/icons-material/Close";
 import { FileUploadField } from "components/FileUploadField";
 import styled from "styled-components";
 import useStates from "src/components/hooks/useState";
@@ -26,7 +25,7 @@ const UploadForm = React.memo(() => {
   };
 
   return (
-    <Stack justifyContent={"center"}>
+    <Stack justifyContent={"center"} width={"100%"} alignItems={"center"}>
       <Form onSubmit={onSubmit} initialValues={initial}>
         {({ handleSubmit, submitting }: FormRenderProps) => (
           <StyledForm noValidate onSubmit={handleSubmit}>
@@ -48,9 +47,9 @@ const UploadForm = React.memo(() => {
                 type="submit"
                 sx={{ width: "260px" }}
                 data-testid="ok-dialog-button"
-                variant="z1primary"
                 // loading={submitting}
                 disabled={submitting}
+                variant="contained"
               >
                 Submit
               </Button>

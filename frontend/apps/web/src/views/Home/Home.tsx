@@ -19,8 +19,7 @@ const Home = React.memo(() => {
       flex={1}
       flexDirection="column"
       overflow="auto"
-      height={"100%"}
-      padding={10}
+      padding={5}
       justifyContent="center"
       alignItems="center"
     >
