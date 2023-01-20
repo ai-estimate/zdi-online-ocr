@@ -1,17 +1,17 @@
 :root {
-  --map-menu-height: 48px;
-  --map-sidebar-menu-height: 40px;
+  --ocr-menu-height: 48px;
+  --ocr-sidebar-menu-height: 40px;
   --form-footer: 50px;
   --project-header-height: 63px;
   --left-menu-width: 320px;
   --sidebar-form-width: 0px;
-  --map-sidebar-left: 48px;
-  --font-Inter: 'Inter', sans-serif, DefaultFont;
+  --ocr-sidebar-left: 48px;
+  --font-Inter: "Inter", sans-serif, DefaultFont;
 }
 
 @supports (font-variation-settings: normal) {
   :root {
-    font-family: 'Inter', sans-serif, DefaultFont;
+    font-family: "Inter", sans-serif, DefaultFont;
   }
 }
 .SnackbarItem-contentRoot {
@@ -24,7 +24,7 @@ body {
   margin: 0px;
   padding: 0px;
   overflow: hidden;
-  font-family: 'Inter', sans-serif, DefaultFont !important;
+  font-family: "Inter", sans-serif, DefaultFont !important;
   // follow inter https://rsms.me/inter/
   letter-spacing: -0.004em;
   scroll-behavior: smooth;
@@ -78,7 +78,7 @@ body {
   }
 
   .gutter.gutter-vertical {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=");
   }
   .split {
     -webkit-box-sizing: border-box;
@@ -151,4 +151,4 @@ body {
   }
 }
 
-@import './mapbox_popup';
+@import "./mapbox_popup";

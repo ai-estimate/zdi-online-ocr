@@ -17,7 +17,7 @@ const Pricing = React.memo(() => {
   return (
     <Stack px={1} py={2}>
       <TableContainer component={Paper}>
-        <Table aria-label="price-table" size="small" stickyHeader>
+        <Table aria-label="price-table" size={"small"} stickyHeader>
           <caption>ZDI Onile OCR Plans</caption>
           <TableHead>
             <StyledTableRowFt>
@@ -57,8 +57,15 @@ const ZDITableCell = (props: IProps) => {
 
   return (
     <TableCell align="center">
-      {isYes && <CheckCircleRoundedIcon color="success" />}
-      {isNo && <CancelRoundedIcon color="error" />}
+      {isYes && (
+        <CheckCircleRoundedIcon
+          color="success"
+          sx={{ width: "1.5rem", pt: "5px" }}
+        />
+      )}
+      {isNo && (
+        <CancelRoundedIcon color="error" sx={{ width: "1.5rem", pt: "5px" }} />
+      )}
       {isYes === null && isNo === null && item}
     </TableCell>
   );
