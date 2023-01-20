@@ -6,7 +6,7 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { IconButton, Paper, Stack, Typography } from "@mui/material";
 
 // eslint-disable-next-line react/display-name
-export const FileUploadField = React.memo(({ input, duplicate }: any) => {
+export const FileUploadField = React.memo(({ input }: any) => {
   const onDrop = React.useCallback((files: any) => {
     if (files.length > 0) {
       input.onChange(files[0]);
@@ -31,20 +31,31 @@ export const FileUploadField = React.memo(({ input, duplicate }: any) => {
   if (value && value instanceof File) {
     url = URL.createObjectURL(input.value);
   }
-  // console.log("url::", url);
+  const item = {
+    name: value?.name,
+    size: value?.size / 1024 / 1024,
+    isPDF: value?.type === "application/pdf",
+  };
 
   return (
     <StyledPaper variant="outlined">
       <div className="dropzone">
         {url && (
-          <div className="image-preview">
-            <img src={url} />
-            <StyledRemove>
-              <IconButton className="btn-delete" onClick={handleRemove}>
-                <CloseRoundedIcon className="delete-icon" />
-              </IconButton>
-            </StyledRemove>
-          </div>
+          <>
+            <div className="image-preview">
+              {!item.isPDF && <img src={url} />}
+              {item.isPDF && <img src={"/assets/svgs/pdf_icon.svg"} />}
+              <StyledRemove>
+                <IconButton className="btn-delete" onClick={handleRemove}>
+                  <CloseRoundedIcon className="delete-icon" />
+                </IconButton>
+              </StyledRemove>
+            </div>
+            <Typography variant="h6">{item?.name}</Typography>
+            <Typography variant="subtitle1">
+              {item?.size.toFixed(2)} MB
+            </Typography>
+          </>
         )}
         <div className="presentation" {...getRootProps()}>
           <input {...getInputProps()} />
@@ -55,13 +66,13 @@ export const FileUploadField = React.memo(({ input, duplicate }: any) => {
           ) : url ? (
             <div className="browse">
               <UploadFileIcon color="secondary" />
-              <Typography>Browse...</Typography>
+              <Typography>Browse!...</Typography>
             </div>
           ) : (
             <div className="dropzone-content">
               <UploadFileIcon color="secondary" />
               <Typography variant="h6">
-                Drag and drop a JPG, PNG, or PDF file.{" "}
+                Drag and drop a JPG, PNG, or PDF file.
               </Typography>
               <div className="browse">
                 <UploadFileIcon color="secondary" />
@@ -85,7 +96,7 @@ const StyledRemove = styled.div`
 `;
 const StyledPaper = styled(Paper)`
   && {
-    padding: 2rem;
+    padding: 0.25rem;
     background-color: #f8f8f8;
     border-radius: var(--border-radius-default);
     min-height: 350px;
@@ -120,7 +131,6 @@ const StyledPaper = styled(Paper)`
     align-items: center;
     text-align: center;
     width: 100%;
-    gap: 10px;
     height: 100%;
     cursor: pointer;
     .MuiDropzoneArea-root {
@@ -135,6 +145,9 @@ const StyledPaper = styled(Paper)`
   .presentation {
     width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .image-preview {
     max-width: 100%;
@@ -143,6 +156,7 @@ const StyledPaper = styled(Paper)`
       max-width: 450px;
       max-height: 225px;
       width: 100%;
+      object-fit: contain;
     }
   }
   .dropzone-content {
@@ -162,6 +176,7 @@ const StyledPaper = styled(Paper)`
       font-size: 0.875rem;
     }
     .browse {
+      padding: 10px 0px;
       display: flex;
       align-items: center;
       margin-top: 28px;

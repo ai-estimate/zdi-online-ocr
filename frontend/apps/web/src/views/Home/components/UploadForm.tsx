@@ -1,17 +1,10 @@
 import React from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Stack,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Stack } from "@mui/material";
 import { Form, FormRenderProps, Field } from "react-final-form";
 import { FileUploadField } from "components/FileUploadField";
 import styled from "styled-components";
 import useStates from "src/components/hooks/useState";
-import { Button } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 // eslint-disable-next-line react/display-name
 const UploadForm = React.memo(() => {
@@ -21,13 +14,15 @@ const UploadForm = React.memo(() => {
   const { initial } = state;
 
   const onSubmit = async (field: any) => {
-    console.log("field::", field);
+    setTimeout(() => {
+      console.log("field::", field);
+    }, 2000);
   };
 
   return (
     <Stack justifyContent={"center"} width={"100%"} alignItems={"center"}>
       <Form onSubmit={onSubmit} initialValues={initial}>
-        {({ handleSubmit, submitting }: FormRenderProps) => (
+        {({ handleSubmit, submitting, pristine }: FormRenderProps) => (
           <StyledForm noValidate onSubmit={handleSubmit}>
             <Stack
               spacing={2}
@@ -35,24 +30,20 @@ const UploadForm = React.memo(() => {
               justifyContent="center"
               alignItems={"center"}
             >
-              <Field
-                name="backgroundImage"
-                component={FileUploadField}
-                duplicate
-              />
+              <Field name="backgroundImage" component={FileUploadField} />
             </Stack>
             <Stack flex="1" p={1} alignItems={"center"}>
-              <Button
+              <LoadingButton
                 className="save-map"
                 type="submit"
                 sx={{ width: "260px" }}
                 data-testid="ok-dialog-button"
-                // loading={submitting}
-                disabled={submitting}
+                loading={submitting}
+                disabled={pristine || submitting}
                 variant="contained"
               >
                 Submit
-              </Button>
+              </LoadingButton>
             </Stack>
           </StyledForm>
         )}
