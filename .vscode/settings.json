@@ -28,5 +28,11 @@
   "vscord.status.state.text.viewing": "",
   "vscord.status.image.small.viewing.text": "",
   "vscord.status.button.active.label": "",
-  "python.formatting.provider": "black"
+  "python.formatting.provider": "black",
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    },
+    "editor.formatOnSave": true
+  }
 }

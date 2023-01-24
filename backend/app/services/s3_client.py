@@ -1,3 +1,5 @@
+import logging
+
 import boto3
 
 from ..config import settings
@@ -12,17 +14,31 @@ class S3Client:
     )
 
     @classmethod
-    def createPresignedPost(
+    def createPresignedUrl(
         cls,
         filename: str,
-        file_type: str,
         fields=None,
         expiration=3600,
     ):
-        return cls.client.generate_presigned_post(
-            Bucket=settings.aws_s3_bucket_name,
-            Key=filename,
-            Conditions=[{"acl": "public-read"}, {"Content-Type": file_type}],
-            ExpiresIn=expiration,
-            Fields=fields,
-        )
+        try:
+            response = cls.client.generate_presigned_url(
+                "get_object",
+                Params={
+                    "Bucket": settings.aws_s3_bucket_name,
+                    "Key": filename,
+                },
+                ExpiresIn=expiration,
+            )
+        except Exception as e:
+            print(e)
+            logging.error(e)
+            return "Error"
+        # The response contains the presigned URL
+        return response
+        # return cls.client.generate_presigned_post(
+        #     Bucket=settings.aws_s3_bucket_name,
+        #     Key=filename,
+        #     Conditions=[{"acl": "public-read"}, {"Content-Type": file_type}],
+        #     ExpiresIn=expiration,
+        #     Fields=fields,
+        # )

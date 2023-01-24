@@ -13,12 +13,6 @@ class S3CreatePresignedUrlResponseModel(BaseModel):
                 "message": "success",
                 "data": {
                     "url": "https://mybucket.s3.amazonaws.com",
-                    "fields": {
-                        "key": "mykey",
-                        "AWSAccessKeyId": "myaccess",
-                        "signature": "mysignature",
-                        "policy": "mybase64 encoded policy",
-                    },
                 },
             }
         }
