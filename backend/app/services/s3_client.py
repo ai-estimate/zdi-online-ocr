@@ -1,6 +1,7 @@
 import logging
 
 import boto3
+from botocore.client import Config
 
 from ..config import settings
 
@@ -11,13 +12,13 @@ class S3Client:
         region_name=settings.aws_region_name,
         aws_access_key_id=settings.aws_access_key_id,
         aws_secret_access_key=settings.aws_secret_access_key,
+        config=Config(signature_version="s3v4"),
     )
 
     @classmethod
     def createPresignedUrl(
         cls,
         filename: str,
-        fields=None,
         expiration=3600,
     ):
         try:
