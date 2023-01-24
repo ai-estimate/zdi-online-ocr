@@ -29,5 +29,6 @@ app.add_middleware(
 async def create_presigned_url(item: S3CreatePresignedUrlRequestModel) -> dict:
     res = S3Client.createPresignedUrl(
         filename=item.filename,
+        file_type=item.file_type,
     )
     return S3CreatePresignedUrlResponseModel(data={"url": res})

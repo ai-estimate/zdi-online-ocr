@@ -19,14 +19,17 @@ class S3Client:
     def createPresignedUrl(
         cls,
         filename: str,
+        file_type: str,
         expiration=3600,
     ):
         try:
             response = cls.client.generate_presigned_url(
-                "get_object",
+                "put_object",
                 Params={
                     "Bucket": settings.aws_s3_bucket_name,
                     "Key": filename,
+                    "ContentType": file_type,
+                    "ACL": "public-read",
                 },
                 ExpiresIn=expiration,
             )
