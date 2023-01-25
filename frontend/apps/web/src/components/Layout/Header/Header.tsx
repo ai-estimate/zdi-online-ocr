@@ -19,7 +19,7 @@ const Header: React.FC = React.memo(() => {
           <Toolbar
             variant="dense"
             disableGutters
-            sx={{ minHeight: 40, alignItems: "center" }}
+            sx={{ minHeight: 54, alignItems: "center" }}
           >
             <Stack position="relative">
               <StyledLogo
@@ -32,6 +32,7 @@ const Header: React.FC = React.memo(() => {
               <Stack
                 flexGrow={1}
                 direction="row"
+                justifyContent={"flex-end"}
                 sx={{ alignItems: "flex-end", mb: 0 }}
               >
                 <Menu />

@@ -4,6 +4,7 @@ import {
   isMyfileRoute,
   isPricingRoute,
   isHelpRoute,
+  isPDFToTextRoute,
 } from "./constants";
 
 export const checkActiveMenu = (url: string) => {
@@ -15,6 +16,8 @@ export const checkActiveMenu = (url: string) => {
     return MenuEnum.PRICING;
   } else if (isHelpRoute(url)) {
     return MenuEnum.HELP;
+  } else if (isPDFToTextRoute(url)) {
+    return MenuEnum.PDF_TO_TEXT;
   }
 };
 

@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { Stack } from "@mui/material";
 import { Form, FormRenderProps, Field } from "react-final-form";
 import { FileUploadField } from "components/FileUploadField";
@@ -10,13 +11,26 @@ import { LoadingButton } from "@mui/lab";
 const UploadForm = React.memo(() => {
   const [state, setState]: any = useStates({
     initial: {},
+    loading: false,
+    res: {},
   });
-  const { initial } = state;
+  const { initial, loading, res } = state;
+  const baseUrl = "http://api.nextspell.com/khmerocr_api";
 
   const onSubmit = async (field: any) => {
-    setTimeout(() => {
-      console.log("field::", field);
-    }, 2000);
+    setState({ loading: true });
+    let formData = new FormData();
+    formData.append("file", field.backgroundImage);
+    const options = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": baseUrl,
+      },
+    };
+    const response = await axios.post(baseUrl, formData, options);
+
+    setState({ loading: false });
+    // setState({ res: response.data });
   };
 
   return (
@@ -30,20 +44,36 @@ const UploadForm = React.memo(() => {
               justifyContent="center"
               alignItems={"center"}
             >
-              <Field name="backgroundImage" component={FileUploadField} />
+              <Field
+                name="backgroundImage"
+                component={FileUploadField}
+                isLoading={loading}
+                res={res}
+              />
             </Stack>
             <Stack flex="1" p={1} alignItems={"center"}>
-              <LoadingButton
-                className="save-map"
-                type="submit"
-                sx={{ width: "260px" }}
-                data-testid="ok-dialog-button"
-                loading={submitting}
-                disabled={pristine || submitting}
-                variant="contained"
-              >
-                Submit
-              </LoadingButton>
+              {!loading && (
+                <LoadingButton
+                  loadingIndicator="Loading…"
+                  type="submit"
+                  sx={{ width: "260px" }}
+                  data-testid="ok-dialog-button"
+                  loading={loading}
+                  disabled={pristine || submitting}
+                  variant="contained"
+                >
+                  Submit
+                </LoadingButton>
+              )}
+              {loading && (
+                <LoadingButton
+                  sx={{ width: "260px" }}
+                  loading
+                  variant="outlined"
+                >
+                  Fetch data
+                </LoadingButton>
+              )}
             </Stack>
           </StyledForm>
         )}

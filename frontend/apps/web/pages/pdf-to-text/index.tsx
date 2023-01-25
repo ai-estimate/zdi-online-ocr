@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "src/components/Layout";
 
 // eslint-disable-next-line react/display-name
-const MyfilePage = React.memo(() => {
+const PDFToTextPage = React.memo(() => {
   return (
     <Layout title="My File - DZI OCR ONLINE">
       <h3>
@@ -15,4 +15,4 @@ const MyfilePage = React.memo(() => {
   );
 });
 
-export default MyfilePage;
+export default PDFToTextPage;

@@ -6,7 +6,7 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { IconButton, Paper, Stack, Typography } from "@mui/material";
 
 // eslint-disable-next-line react/display-name
-export const FileUploadField = React.memo(({ input }: any) => {
+export const FileUploadField = React.memo(({ input, isLoading, res }: any) => {
   const onDrop = React.useCallback((files: any) => {
     if (files.length > 0) {
       input.onChange(files[0]);
@@ -37,14 +37,15 @@ export const FileUploadField = React.memo(({ input }: any) => {
     isPDF: value?.type === "application/pdf",
   };
 
+  console.log("res:::", res);
   return (
     <StyledPaper variant="outlined">
       <div className="dropzone">
-        {url && (
+        {url && !isLoading && (
           <>
             <div className="image-preview">
-              {!item.isPDF && <img src={url} />}
-              {item.isPDF && <img src={"/assets/svgs/pdf_icon.svg"} />}
+              {!item?.isPDF && <img src={url} />}
+              {item?.isPDF && <img src={"/assets/svgs/pdf_icon.svg"} />}
               <StyledRemove>
                 <IconButton className="btn-delete" onClick={handleRemove}>
                   <CloseRoundedIcon className="delete-icon" />
@@ -59,26 +60,35 @@ export const FileUploadField = React.memo(({ input }: any) => {
         )}
         <div className="presentation" {...getRootProps()}>
           <input {...getInputProps()} />
-          {isDragActive ? (
-            <div className="dropzone-content">
-              <Typography variant="h6">Drop the files here ...</Typography>
-            </div>
-          ) : url ? (
-            <div className="browse">
-              <UploadFileIcon color="secondary" />
-              <Typography>Browse!...</Typography>
-            </div>
+          {isLoading ? (
+            <Stack flexDirection={"column"}>
+              <img src={"/assets/gif/Loader.gif"} />
+              <Typography variant="h6">Uploading . . .</Typography>
+            </Stack>
           ) : (
-            <div className="dropzone-content">
-              <UploadFileIcon color="secondary" />
-              <Typography variant="h6">
-                Drag and drop a JPG, PNG, or PDF file.
-              </Typography>
-              <div className="browse">
-                <UploadFileIcon color="secondary" />
-                <Typography variant="h6">Browse...</Typography>
-              </div>
-            </div>
+            <>
+              {isDragActive ? (
+                <div className="dropzone-content">
+                  <Typography variant="h6">Drop the files here ...</Typography>
+                </div>
+              ) : url ? (
+                <div className="browse">
+                  <UploadFileIcon color="secondary" />
+                  <Typography>Browse!...</Typography>
+                </div>
+              ) : (
+                <div className="dropzone-content">
+                  <UploadFileIcon color="secondary" />
+                  <Typography variant="h6">
+                    Drag and drop a JPG, PNG, or PDF file.
+                  </Typography>
+                  <div className="browse">
+                    <UploadFileIcon color="secondary" />
+                    <Typography variant="h6">Browse...</Typography>
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

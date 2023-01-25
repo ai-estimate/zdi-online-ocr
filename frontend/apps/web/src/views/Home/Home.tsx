@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Container, Stack, Typography } from "@mui/material";
+import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
 import UploadForm from "./components/UploadForm";
 
@@ -19,7 +20,6 @@ const Home = React.memo(() => {
       flex={1}
       flexDirection="column"
       overflow="auto"
-      padding={5}
       justifyContent="center"
       alignItems="center"
     >
@@ -43,5 +43,19 @@ const Home = React.memo(() => {
     </Stack>
   );
 });
+
+const StyledContainer = styled(Container)`
+  && {
+    ${(props: any) => props.theme.breakpoints?.up("xs")} {
+      padding: 0px 8px;
+    }
+    ${(props: any) => props.theme.breakpoints?.up("md")} {
+      padding: 0px 5%;
+    }
+    ${(props: any) => props.theme.breakpoints?.up("lg")} {
+      padding: 0px 13%;
+    }
+  }
+`;
 
 export default Home;

@@ -14,6 +14,7 @@ const Menu = React.memo(() => {
     return checkActiveMenu(pathname);
   };
   const activeRoute = getActiveRoute();
+
   return (
     <>
       {MENU_ITEM.map((item: any, index: number) => {
@@ -35,7 +36,8 @@ const Menu = React.memo(() => {
 
 const StyledButtonMenu: any = styled(Button)`
   && {
-    padding: 3px 16px;
+    font-size: 18px;
+    padding: 6px 16px;
     text-transform: inherit;
     border-radius: ${(p: any) => (p.selected ? "4px 4px 0px 0px" : "0px")};
     color: ${(p: any) => (p.selected ? "#006064" : "white")};

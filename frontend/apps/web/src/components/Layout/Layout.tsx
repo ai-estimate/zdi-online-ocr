@@ -38,6 +38,7 @@ const StyledRootWrapper = styled.main`
 const StyledContainer: any = styled.div`
   height: calc(100% - var(--ocr-sidebar-left, 0px));
   overflow-y: auto;
+  /* padding: 16px 16px 0 16px; */
 `;
 
 export default Layout;
