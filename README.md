@@ -6,6 +6,7 @@
 
    ```sh
    $ cd backend
+   $ cp .env.example .env
    $ python3.9 -m venv venv
    $ source venv/bin/activate
    (env)$ pip install -r requirements.txt
