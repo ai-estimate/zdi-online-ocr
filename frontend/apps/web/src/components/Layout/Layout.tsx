@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import Head from "next/head";
 import styled from "styled-components";
 import Header from "./Header";
+import { Stack } from "@mui/material";
 
 type Props = {
   children?: ReactNode;
@@ -24,7 +25,9 @@ const Layout: React.FC<Props> = ({
       </Head>
       <StyledRootWrapper id="zdi-ocr-dashboard">
         {headerShown && <Header />}
-        <StyledContainer>{children}</StyledContainer>
+        <StyledContainer>
+          <Stack px={{ md: "5%", lg: "20%" }}>{children}</Stack>
+        </StyledContainer>
       </StyledRootWrapper>
     </>
   );

@@ -37,7 +37,6 @@ export const FileUploadField = React.memo(({ input, isLoading, res }: any) => {
     isPDF: value?.type === "application/pdf",
   };
 
-  console.log("res:::", res);
   return (
     <StyledPaper variant="outlined">
       <div className="dropzone">
