@@ -43,8 +43,10 @@ export const FileUploadField = React.memo(({ input, isLoading, res }: any) => {
         {url && !isLoading && (
           <>
             <div className="image-preview">
-              {!item?.isPDF && <img src={url} />}
-              {item?.isPDF && <img src={"/assets/svgs/pdf_icon.svg"} />}
+              {!item?.isPDF && <img alt={url} src={url} />}
+              {item?.isPDF && (
+                <img alt={url} src={"/assets/svgs/pdf_icon.svg"} />
+              )}
               <StyledRemove>
                 <IconButton className="btn-delete" onClick={handleRemove}>
                   <CloseRoundedIcon className="delete-icon" />
@@ -61,7 +63,10 @@ export const FileUploadField = React.memo(({ input, isLoading, res }: any) => {
           <input {...getInputProps()} />
           {isLoading ? (
             <Stack flexDirection={"column"}>
-              <img src={"/assets/gif/Loader.gif"} />
+              <img
+                alt={"assets_gif_Loader.gif"}
+                src={"/assets/gif/Loader.gif"}
+              />
               <Typography variant="h6">Uploading . . .</Typography>
             </Stack>
           ) : (

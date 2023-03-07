@@ -7,7 +7,7 @@ import { Stack } from "@mui/material";
 type Props = {
   children?: ReactNode;
   title?: string;
-  user: any;
+  user?: any;
   loading?: boolean;
   headerShown?: boolean;
 };
