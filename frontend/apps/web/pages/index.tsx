@@ -1,13 +1,12 @@
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import {Home} from '@views/Home';
+import {Layout} from '@components/Layout';
 
-// eslint-disable-next-line react/display-name
-const IndexPage = React.memo(() => {
-  const router = useRouter();
-  useEffect(() => {
-    router.replace("/home");
-  }, []);
-  return null;
-});
+const IndexPage = () => {
+  return (
+    <Layout>
+      <Home />
+    </Layout>
+  );
+};
 
 export default IndexPage;

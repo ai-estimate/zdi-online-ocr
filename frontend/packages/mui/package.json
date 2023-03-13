@@ -1,53 +1,38 @@
 {
   "name": "@zdi/mui",
   "version": "1.0.0",
-  "description": "ZDI material-ui custom",
-  "main": "./src/index.tsx",
-  "types": "./src/index.tsx",
-  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "license": "MIT",
+  "author": "Keaksey",
   "scripts": {
-    "lint": "TIMING=1 eslint \"src/**/*.ts*\"",
+    "lint": "eslint *.ts*",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
-  "keywords": [
-    "material-ui",
-    "theme"
-  ],
-  "author": "Keaksey",
-  "license": "ISC",
-  "peerDependencies": {
-    "styled-components": "^5.3.6"
-  },
   "dependencies": {
-    "@glideapps/glide-data-grid": "5.2.1",
-    "@glideapps/glide-data-grid-cells": "5.2.1",
-    "@glideapps/glide-data-grid-source": "5.2.1",
-    "@hookstate/core": "^4.0.0",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@hookstate/core": "*",
     "@mui/icons-material": "*",
     "@mui/lab": "*",
-    "@mui/material": "^5.11.3",
-    "@mui/styles": "^5.11.2",
-    "@mui/x-data-grid": "^5.17.17",
+    "@mui/material": "^5.11.12",
+    "@mui/styles": "^5.11.12",
     "lodash": "*",
-    "marked": "^4.2.5",
     "moment": "^2.29.4",
-    "re-resizable": "^6.9.9",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-infinite-scroll-component": "^6.1.0",
-    "react-player": "^2.11.0",
-    "react-responsive-carousel": "^3.2.23"
+    "next": "13.2.4",
+    "react": "*",
+    "react-dom": "*",
+    "simplebar-react": "^3.2.1"
   },
   "devDependencies": {
-    "@types/jest": "29.2.5",
+    "@types/jest": "29.4.0",
     "@types/lodash": "*",
-    "@types/node": "18.11.18",
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.10",
-    "@types/styled-components": "^5.1.26",
-    "eslint": "^8.31.0",
+    "@types/node": "18.15.0",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "eslint": "^8.36.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
-    "typescript": "4.9.4"
+    "typescript": "^4.9.5"
   }
 }

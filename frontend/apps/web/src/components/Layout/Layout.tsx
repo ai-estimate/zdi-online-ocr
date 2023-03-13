@@ -1,47 +1,37 @@
-import React, { ReactNode } from "react";
-import Head from "next/head";
-import styled from "styled-components";
-import Header from "./Header";
-import { Stack } from "@mui/material";
+import React from 'react';
+import {Box, Container, Stack, Typography} from '@mui/material';
+import {alpha} from '@mui/material/styles';
+export const SIDE_NAV_WIDTH = 280;
+export const TOP_NAV_HEIGHT = 64;
 
-type Props = {
-  children?: ReactNode;
-  title?: string;
-  user?: any;
-  loading?: boolean;
-  headerShown?: boolean;
-};
-const Layout: React.FC<Props> = ({
-  children,
-  headerShown = true,
-  title = "This is the default title",
-}) => {
+interface ILayoutProps {
+  children: React.ReactNode;
+}
+export const Layout: React.FC<ILayoutProps> = ({children}) => {
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-      <StyledRootWrapper id="zdi-ocr-dashboard">
-        {headerShown && <Header />}
-        <StyledContainer>
-          <Stack px={{ md: "5%", lg: "20%" }}>{children}</Stack>
-        </StyledContainer>
-      </StyledRootWrapper>
+      <Box
+        component="header"
+        sx={{
+          backdropFilter: 'blur(6px)',
+          backgroundColor: (theme) =>
+            alpha(theme.palette.background.default, 0.8),
+          position: 'sticky',
+          top: 0,
+          zIndex: (theme) => theme.zIndex.appBar,
+        }}>
+        <Stack
+          alignItems="center"
+          direction="row"
+          justifyContent="space-between"
+          spacing={2}
+          sx={{minHeight: TOP_NAV_HEIGHT}}>
+          <Container maxWidth="xl">
+            <Typography variant="h4">NextSpell</Typography>
+          </Container>
+        </Stack>
+      </Box>
+      <Box sx={{py: 8, px: 2, width: '100%'}}>{children}</Box>
     </>
   );
 };
-
-const StyledRootWrapper = styled.main`
-  flex-grow: 1;
-  height: 100vh;
-  max-height: 100%;
-`;
-const StyledContainer: any = styled.div`
-  height: calc(100% - var(--ocr-sidebar-left, 0px));
-  overflow-y: auto;
-  /* padding: 16px 16px 0 16px; */
-`;
-
-export default Layout;
