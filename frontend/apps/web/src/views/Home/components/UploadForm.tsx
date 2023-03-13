@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Stack } from "@mui/material";
 import { Form, FormRenderProps, Field } from "react-final-form";
-import { FileUploadField } from "components/FileUploadField";
+import { FileUploadField } from "components/Fields";
 import styled from "styled-components";
 import useStates from "src/components/hooks/useState";
 import { LoadingButton } from "@mui/lab";
@@ -26,6 +26,7 @@ const UploadForm = React.memo(() => {
     const options = {
       headers: {
         "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       },
     };
     const response = await axios.post(baseUrl, formData, options);

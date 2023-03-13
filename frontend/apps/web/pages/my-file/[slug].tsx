@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "src/components/Layout";
-import MyFIle from "src/views/MyFIle";
+import BlankPage from "src/views/MyFIle/BlankPage";
 
 // eslint-disable-next-line react/display-name
 const MyFilePage = React.memo(() => {
@@ -12,7 +12,7 @@ const MyFilePage = React.memo(() => {
         You can sign up here. Here&apos;s a sneak peak of what your personal
         inbox in ZDI OCR Online will look like:
       </h3>
-      <MyFIle />
+      <BlankPage />
     </Layout>
   );
 });

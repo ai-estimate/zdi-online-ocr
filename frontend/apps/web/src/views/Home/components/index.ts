@@ -1,3 +1,3 @@
-export * from "./FileUploadField";
+export * from "./UploadForm";
 import TextDisplay from "./TextDisplay";
-export default TextDisplay;
+export { TextDisplay };
