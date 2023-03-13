@@ -29,8 +29,7 @@
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
     "sass": "^1.57.1",
-    "styled-components": "^5.3.6",
-    "ui": "workspace:*"
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

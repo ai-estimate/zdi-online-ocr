@@ -1,0 +1,24 @@
+{
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/node_modules": true,
+    ".{dev,shadowenv.d}": true,
+    "{build,dist}/": true,
+    "examples/*/build": true,
+    ".next": true,
+    ".github": true,
+    ".vercel": true
+  },
+  "editor.formatOnSave": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    ".{dev,shadowenv.d}": true,
+    "{build,dist}/": true,
+    "examples/*/build": true,
+    ".next": true,
+    "**/.next": true,
+    "package-lock.json": true,
+    "pnpm-lock.yaml": true
+  }
+}
