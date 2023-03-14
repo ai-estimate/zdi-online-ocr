@@ -31,7 +31,7 @@ export const Layout: React.FC<ILayoutProps> = ({children}) => {
           </Container>
         </Stack>
       </Box>
-      <Box sx={{py: 8, px: 2, width: '100%'}}>{children}</Box>
+      <Box sx={{width: '100%', height: '100%', pt: 6}}>{children}</Box>
     </>
   );
 };

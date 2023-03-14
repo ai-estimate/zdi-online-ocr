@@ -1,12 +1,34 @@
 import React, {useRef} from 'react';
-import {Editor, convertToRaw, RichUtils, EditorState} from 'draft-js';
+import {
+  Editor,
+  RichUtils,
+  EditorState,
+  convertFromHTML,
+  ContentState,
+} from 'draft-js';
 import useStates from 'src/hooks/useState';
-import {Box, Stack, styled} from '@mui/material';
+import {Box, Stack, styled, Typography} from '@mui/material';
 import {ToolBar} from './ToolBar';
-import draftToHtml from 'draftjs-to-html';
+import {convertToHTML} from 'draft-convert';
+import debounce from 'lodash/debounce';
+import axios from 'axios';
+
+const postAPI = async (data: any) => {
+  try {
+    const {data: resp} = await axios.post(
+      'http://api.nextspell.com/api_spellcheck',
+      {data},
+      {headers: {'Content-Type': 'multipart/form-data'}},
+    );
+    return resp;
+  } catch (error) {
+    return null;
+  }
+};
 
 export const ZDIEditor: React.FC = () => {
   const [state, setState] = useStates({editorState: EditorState.createEmpty()});
+
   const myEditor: any = useRef(null);
   const {editorState} = state;
 
@@ -14,10 +36,34 @@ export const ZDIEditor: React.FC = () => {
     myEditor.current?.focus();
   };
 
-  const onChange = (editorState: any) => {
-    setState({editorState});
-    const rawContentState = convertToRaw(editorState.getCurrentContent());
-    console.log('editorState::: ', editorState, draftToHtml(rawContentState));
+  const saveContent = debounce(async (content) => {
+    const data = await postAPI(content);
+    const message = data?.message;
+
+    if (message) {
+      const blocksFromHTML = convertFromHTML(message);
+      const state = ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap,
+      );
+      const newState = EditorState.createWithContent(state);
+      const mungedState = EditorState.forceSelection(
+        newState,
+        editorState.getSelection(),
+      );
+      setState({editorState: mungedState});
+    }
+  }, 360);
+
+  const onChange = (newState: EditorState) => {
+    setState({editorState: newState});
+    const currentPlainText = editorState.getCurrentContent().getPlainText();
+    const newPlainText = newState.getCurrentContent().getPlainText();
+
+    if (currentPlainText.trim() !== newPlainText.trim()) {
+      const rawContentState = newState.getCurrentContent();
+      saveContent(convertToHTML(rawContentState));
+    }
   };
 
   const handleKeyCommand = (command: any) => {
@@ -35,14 +81,14 @@ export const ZDIEditor: React.FC = () => {
 
   return (
     <Box sx={{height: '100%'}}>
-      <EditorWraperStyled onClick={focusEditor}>
+      <EditorWraperStyled onClick={focusEditor} component="div">
         <Editor
           customStyleMap={styleMap}
           ref={myEditor}
           editorKey="foobar"
           editorState={editorState}
           onChange={onChange}
-          placeholder="Write something!"
+          placeholder="Type or paste (⌘+V) your text here!"
           spellCheck={false}
           handleKeyCommand={handleKeyCommand}
         />
@@ -55,8 +101,6 @@ export const ZDIEditor: React.FC = () => {
 };
 
 const ToolBarStyled = styled(Stack)({
-  display: 'flex',
-  alignItems: 'center',
   backgroundColor: 'white',
   color: '#000000bd',
   position: 'fixed',
@@ -67,24 +111,16 @@ const ToolBarStyled = styled(Stack)({
   padding: '0em 2em',
 });
 
-const EditorWraperStyled = styled('div')({
-  // border: '1px solid gray',
-  minHeight: '50em',
+const EditorWraperStyled = styled(Typography)({
+  border: '1px solid gray',
   cursor: 'text',
+  padding: '1em',
+  '.DraftEditor-root': {
+    margin: 'auto',
+    height: '300px',
+    overflowY: 'scroll',
+    fontSize: '18px',
+  },
 });
 
-const styleMap = {
-  CODE: {
-    backgroundColor: 'red',
-    fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
-    fontSize: 16,
-    padding: 4,
-  },
-  BOLD: {
-    color: '#000000',
-    fontWeight: 'bold',
-  },
-  ANYCUSTOMSTYLE: {
-    color: '#00e400',
-  },
-};
+const styleMap = {};

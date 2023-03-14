@@ -2,6 +2,7 @@ import {ToggleButton, ToggleButtonGroup} from '@mui/material';
 import React from 'react';
 
 export const ToolBar: React.FC<any> = ({onToggle, editorState}) => {
+  return null;
   var currentStyle = editorState.getCurrentInlineStyle();
 
   const [formats, setFormats] = React.useState(() => []);
