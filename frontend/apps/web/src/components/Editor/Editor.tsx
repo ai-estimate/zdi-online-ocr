@@ -1,8 +1,9 @@
 import React, {useRef} from 'react';
-import {Editor, RichUtils, EditorState} from 'draft-js';
+import {Editor, convertToRaw, RichUtils, EditorState} from 'draft-js';
 import useStates from 'src/hooks/useState';
 import {Box, Stack, styled} from '@mui/material';
 import {ToolBar} from './ToolBar';
+import draftToHtml from 'draftjs-to-html';
 
 export const ZDIEditor: React.FC = () => {
   const [state, setState] = useStates({editorState: EditorState.createEmpty()});
@@ -13,18 +14,22 @@ export const ZDIEditor: React.FC = () => {
     myEditor.current?.focus();
   };
 
-  const onChange = (editorState: any) => setState({editorState});
+  const onChange = (editorState: any) => {
+    setState({editorState});
+    const rawContentState = convertToRaw(editorState.getCurrentContent());
+    console.log('editorState::: ', editorState, draftToHtml(rawContentState));
+  };
 
   const handleKeyCommand = (command: any) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
       onChange(newState);
-      return true;
+      return 'handled';
     }
-    return false;
+    return 'not-handled';
   };
 
-  const toggleToolbar = (inlineStyle) => {
+  const toggleToolbar = (inlineStyle: any) => {
     onChange(RichUtils.toggleInlineStyle(editorState, inlineStyle));
   };
 
@@ -39,6 +44,7 @@ export const ZDIEditor: React.FC = () => {
           onChange={onChange}
           placeholder="Write something!"
           spellCheck={false}
+          handleKeyCommand={handleKeyCommand}
         />
       </EditorWraperStyled>
       <ToolBarStyled>
