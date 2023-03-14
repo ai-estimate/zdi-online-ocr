@@ -49,16 +49,22 @@ export const ZDIEditor: React.FC = () => {
 };
 
 const ToolBarStyled = styled(Stack)({
-  display: 'block',
-  backgroundColor: 'black',
-  color: 'white',
-  position: 'absolute',
+  display: 'flex',
+  alignItems: 'center',
+  backgroundColor: 'white',
+  color: '#000000bd',
+  position: 'fixed',
+  bottom: 0,
+  left: 0,
+  right: 0,
   zIndex: 999,
+  padding: '0em 2em',
 });
 
 const EditorWraperStyled = styled('div')({
-  border: '1px solid gray',
-  minHeight: '6em',
+  // border: '1px solid gray',
+  minHeight: '50em',
+  cursor: 'text',
 });
 
 const styleMap = {
@@ -69,7 +75,7 @@ const styleMap = {
     padding: 4,
   },
   BOLD: {
-    color: '#395296',
+    color: '#000000',
     fontWeight: 'bold',
   },
   ANYCUSTOMSTYLE: {
