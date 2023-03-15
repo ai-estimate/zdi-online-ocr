@@ -27,6 +27,7 @@
     "draftjs-to-html": "^0.9.1",
     "final-form": "^4.20.9",
     "final-form-arrays": "^3.1.0",
+    "lodash": "*",
     "material-ui-dropzone": "^3.5.0",
     "moment": "^2.29.4",
     "next": "13.2.4",

@@ -7,11 +7,12 @@ import {
   ContentState,
 } from 'draft-js';
 import useStates from 'src/hooks/useState';
-import {Box, Stack, styled, Typography} from '@mui/material';
+import {Box, Container, Stack, styled, Typography} from '@mui/material';
 import {ToolBar} from './ToolBar';
 import {convertToHTML} from 'draft-convert';
 import debounce from 'lodash/debounce';
 import axios from 'axios';
+import {useRouter} from 'next/router';
 
 const postAPI = async (data: any) => {
   try {
@@ -27,9 +28,14 @@ const postAPI = async (data: any) => {
 };
 
 export const ZDIEditor: React.FC = () => {
-  const [state, setState] = useStates({editorState: EditorState.createEmpty()});
+  const router = useRouter();
+  const [state, setState] = useStates({
+    editorState: EditorState.createEmpty(),
+  });
 
   const myEditor: any = useRef(null);
+  const {pk} = router.query;
+
   const {editorState} = state;
 
   const focusEditor = () => {
@@ -63,6 +69,11 @@ export const ZDIEditor: React.FC = () => {
     if (currentPlainText.trim() !== newPlainText.trim()) {
       const rawContentState = newState.getCurrentContent();
       saveContent(convertToHTML(rawContentState));
+      setItemToLocalStorage('docs', {
+        id: pk,
+        title: pk,
+        content: newPlainText,
+      });
     }
   };
 
@@ -77,6 +88,18 @@ export const ZDIEditor: React.FC = () => {
 
   const toggleToolbar = (inlineStyle: any) => {
     onChange(RichUtils.toggleInlineStyle(editorState, inlineStyle));
+  };
+
+  const setItemToLocalStorage = (key: string, value: any) => {
+    // get data from local storage
+    const data = JSON?.parse(localStorage.getItem('docs') || '[]');
+
+    // remove if the same id
+    const newData = data?.filter((item: any) => item.id !== value.id);
+    newData.push(value);
+
+    // set new data to local storage
+    localStorage.setItem(key, JSON.stringify(newData));
   };
 
   return (
@@ -94,7 +117,9 @@ export const ZDIEditor: React.FC = () => {
         />
       </EditorWraperStyled>
       <ToolBarStyled>
-        <ToolBar editorState={editorState} onToggle={toggleToolbar} />
+        <Container maxWidth="xl">
+          <ToolBar editorState={editorState} onToggle={toggleToolbar} />
+        </Container>
       </ToolBarStyled>
     </Box>
   );
@@ -108,7 +133,6 @@ const ToolBarStyled = styled(Stack)({
   left: 0,
   right: 0,
   zIndex: 999,
-  padding: '0em 2em',
 });
 
 const EditorWraperStyled = styled(Typography)({

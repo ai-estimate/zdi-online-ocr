@@ -41,6 +41,7 @@ importers:
       eslint-config-custom: workspace:*
       final-form: ^4.20.9
       final-form-arrays: ^3.1.0
+      lodash: '*'
       material-ui-dropzone: ^3.5.0
       moment: ^2.29.4
       next: 13.2.4
@@ -73,6 +74,7 @@ importers:
       draftjs-to-html: 0.9.1
       final-form: 4.20.9
       final-form-arrays: 3.1.0_final-form@4.20.9
+      lodash: 4.17.21
       material-ui-dropzone: 3.5.0_biqbaboplfbrettd7655fr4n2y
       moment: 2.29.4
       next: 13.2.4_biqbaboplfbrettd7655fr4n2y
