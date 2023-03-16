@@ -33,6 +33,7 @@ export const ZDIEditor: React.FC = () => {
   const [state, setState] = useStates({
     editorState: EditorState.createEmpty(),
   });
+  console.log('EditorState.createEmpty()::', EditorState.createEmpty());
 
   const myEditor: any = useRef(null);
   const {pk} = router.query;
@@ -46,15 +47,13 @@ export const ZDIEditor: React.FC = () => {
   useEffect(() => {
     // check is local storage have data by id
     const localData = JSON?.parse(localStorage.getItem('docs') || '[]');
-    const isExist = localData?.filter((item: any) => item.id == pk);
-    // console.log('isExist::', isExist[0]?.content);
-    console.log('isExist::', isExist);
+    const content = localData?.filter((item: any) => item.id == pk);
+    if (content?.length > 0) {
+      saveContent(localData[0]?.content);
+    }
   }, []);
 
-  const saveContent = debounce(async (content) => {
-    const data = await postAPI(content);
-    const message = data?.message;
-
+  const loadDataToEditor = (message: string) => {
     if (message) {
       const blocksFromHTML = convertFromHTML(message);
       const state = ContentState.createFromBlockArray(
@@ -68,6 +67,12 @@ export const ZDIEditor: React.FC = () => {
       );
       setState({editorState: mungedState});
     }
+  };
+
+  const saveContent = debounce(async (content) => {
+    const data = await postAPI(content);
+    const message = data?.message;
+    loadDataToEditor(message);
   }, 360);
 
   const onChange = (newState: EditorState) => {
