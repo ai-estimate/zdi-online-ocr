@@ -13,6 +13,7 @@ import {convertToHTML} from 'draft-convert';
 import debounce from 'lodash/debounce';
 import axios from 'axios';
 import {useRouter} from 'next/router';
+import {setItemToLocalStorage} from 'src/components/LocalStorege';
 
 const postAPI = async (data: any) => {
   try {
@@ -45,7 +46,7 @@ export const ZDIEditor: React.FC = () => {
   useEffect(() => {
     // check is local storage have data by id
     const localData = JSON?.parse(localStorage.getItem('docs') || '[]');
-    const isExist = localData?.filter((item: any) => item.id === pk);
+    const isExist = localData?.filter((item: any) => item.id == pk);
     // console.log('isExist::', isExist[0]?.content);
     console.log('isExist::', isExist);
   }, []);
@@ -96,18 +97,6 @@ export const ZDIEditor: React.FC = () => {
 
   const toggleToolbar = (inlineStyle: any) => {
     onChange(RichUtils.toggleInlineStyle(editorState, inlineStyle));
-  };
-
-  const setItemToLocalStorage = (key: string, value: any) => {
-    // get data from local storage
-    const data = JSON?.parse(localStorage.getItem('docs') || '[]');
-
-    // remove if the same id
-    const newData = data?.filter((item: any) => item.id !== value.id);
-    newData.push(value);
-
-    // set new data to local storage
-    localStorage.setItem(key, JSON.stringify(newData));
   };
 
   return (
