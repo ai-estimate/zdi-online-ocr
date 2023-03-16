@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   Editor,
   RichUtils,
@@ -42,6 +42,14 @@ export const ZDIEditor: React.FC = () => {
     myEditor.current?.focus();
   };
 
+  useEffect(() => {
+    // check is local storage have data by id
+    const localData = JSON?.parse(localStorage.getItem('docs') || '[]');
+    const isExist = localData?.filter((item: any) => item.id === pk);
+    // console.log('isExist::', isExist[0]?.content);
+    console.log('isExist::', isExist);
+  }, []);
+
   const saveContent = debounce(async (content) => {
     const data = await postAPI(content);
     const message = data?.message;
@@ -72,7 +80,7 @@ export const ZDIEditor: React.FC = () => {
       setItemToLocalStorage('docs', {
         id: pk,
         title: pk,
-        content: newPlainText,
+        content: convertToHTML(rawContentState),
       });
     }
   };

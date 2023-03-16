@@ -13,8 +13,10 @@ import {
   Typography,
 } from '@mui/material';
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
+import {useRouter} from 'next/router';
 
 export const DocumentsLists: React.FC = () => {
+  const router = useRouter();
   const [state, setState] = useStates({items: []});
 
   const {items} = state;
@@ -28,6 +30,11 @@ export const DocumentsLists: React.FC = () => {
 
   const handleSort = () => {
     console.log('sort::');
+  };
+
+  const handleEdit = (item: any) => {
+    console.log('item::', item);
+    router.replace(`/nextspell/${item.id}`);
   };
 
   return (
@@ -66,11 +73,15 @@ export const DocumentsLists: React.FC = () => {
                     width: 210,
                     height: 338,
                     m: 1,
+                    borderRadius: 0.5,
                     borderColor: 'grey.300',
+                    ':hover': {
+                      borderColor: 'darkblue',
+                    },
                   }}
                   variant="outlined"
                   square
-                  onClick={() => console.log('clicked')}>
+                  onClick={() => handleEdit(item)}>
                   <Stack height={263}>
                     <Typography
                       m={2}

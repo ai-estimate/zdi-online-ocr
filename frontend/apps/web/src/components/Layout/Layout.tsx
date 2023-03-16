@@ -1,6 +1,7 @@
 import React from 'react';
-import {Box, Container, Stack, Typography} from '@mui/material';
+import {Box, Button, Container, Stack, Typography} from '@mui/material';
 import {alpha} from '@mui/material/styles';
+import {useRouter} from 'next/router';
 export const SIDE_NAV_WIDTH = 280;
 export const TOP_NAV_HEIGHT = 64;
 
@@ -8,6 +9,10 @@ interface ILayoutProps {
   children: React.ReactNode;
 }
 export const Layout: React.FC<ILayoutProps> = ({children}) => {
+  const router = useRouter();
+  const handleGoHome = () => {
+    router.push('/');
+  };
   return (
     <>
       <Box
@@ -27,7 +32,9 @@ export const Layout: React.FC<ILayoutProps> = ({children}) => {
           spacing={2}
           sx={{minHeight: TOP_NAV_HEIGHT}}>
           <Container maxWidth="xl">
-            <Typography variant="h4">NextSpell</Typography>
+            <Button onClick={handleGoHome}>
+              <Typography variant="h4">NextSpell</Typography>
+            </Button>
           </Container>
         </Stack>
       </Box>
