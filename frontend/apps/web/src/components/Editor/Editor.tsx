@@ -101,7 +101,19 @@ export const ZDIEditor: React.FC = () => {
   };
 
   const toggleToolbar = (inlineStyle: any) => {
-    onChange(RichUtils.toggleInlineStyle(editorState, inlineStyle));
+    try {
+      onChange(RichUtils?.toggleInlineStyle(editorState, inlineStyle));
+    } catch (error) {
+      // console.log('error toggleToolbar :::', error);
+    }
+  };
+
+  const toggleBlockType = (blockType: any) => {
+    try {
+      onChange(RichUtils?.toggleBlockType(editorState, blockType));
+    } catch (error) {
+      // console.log('error toggleBlockType :::', error);
+    }
   };
 
   return (
@@ -120,7 +132,11 @@ export const ZDIEditor: React.FC = () => {
       </EditorWraperStyled>
       <ToolBarStyled>
         <Container maxWidth="xl">
-          <ToolBar editorState={editorState} onToggle={toggleToolbar} />
+          <ToolBar
+            editorState={editorState}
+            onToggle={toggleToolbar}
+            onToggleBlockType={toggleBlockType}
+          />
         </Container>
       </ToolBarStyled>
     </Box>
