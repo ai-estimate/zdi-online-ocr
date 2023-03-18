@@ -1,3 +1,7 @@
+let localStorage: any = {getItem: () => null, setItem: () => null};
+if (typeof window !== 'undefined') {
+  localStorage = window.localStorage;
+}
 export const setItemToLocalStorage = (key: string, value: any) => {
   // get data from local storage
   const data = JSON?.parse(localStorage.getItem('docs') || '[]');

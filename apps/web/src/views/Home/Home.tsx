@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Grid, Stack, Typography} from '@mui/material';
+import {Stack} from '@mui/material';
 import {NewFile} from './components/NewFile';
 import {DocumentsLists} from './components';
 

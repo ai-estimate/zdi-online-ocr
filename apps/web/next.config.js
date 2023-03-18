@@ -21,31 +21,21 @@ let config = {
     titleProp: false,
     icon: true,
   },
-  transpilePackages: ['@zdi/mui', 'eslint-config-custom', 'tsconfig'],
-  modularizeImports: {
-    '@zdi/mui': {
-      transform: '../../packages/mui',
-    },
-  },
+  transpilePackages: ['@zdi/mui'],
   compiler: {
     removeConsole: isProd,
   },
   optimizeFonts: true,
-  reactStrictMode: !isProd,
+  reactStrictMode: true,
 };
 
 let withConfig = withSvgr(config);
-if (isProd) {
-  const withPWA = require('next-pwa');
-  withConfig = withPWA({
-    pwa: {
-      disable: !isProd,
-      dest: 'public',
-      register: true,
-      skipWaiting: true,
-    },
-    ...withConfig,
-  });
-}
 
-module.exports = withConfig;
+const withPWA = require('next-pwa')({
+  disable: !isProd,
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+});
+
+module.exports = withConfig; //withPWA(withConfig);

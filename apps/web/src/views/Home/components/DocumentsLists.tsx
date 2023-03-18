@@ -14,6 +14,10 @@ import {
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import {useRouter} from 'next/router';
 
+let localStorage: any = {getItem: () => null, setItem: () => null};
+if (typeof window !== 'undefined') {
+  localStorage = window.localStorage;
+}
 export const DocumentsLists: React.FC = () => {
   const router = useRouter();
   const _items = localStorage.getItem('docs');
