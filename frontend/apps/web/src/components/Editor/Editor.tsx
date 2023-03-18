@@ -32,6 +32,7 @@ export const ZDIEditor: React.FC = () => {
   const router = useRouter();
   const [state, setState] = useStates({
     editorState: EditorState.createEmpty(),
+    title: '',
   });
   console.log('EditorState.createEmpty()::', EditorState.createEmpty());
 
@@ -49,7 +50,7 @@ export const ZDIEditor: React.FC = () => {
     const localData = JSON?.parse(localStorage.getItem('docs') || '[]');
     const content = localData?.filter((item: any) => item.id == pk);
     if (content?.length > 0) {
-      saveContent(localData[0]?.content);
+      saveContent(content[0]?.content);
     }
   }, []);
 
