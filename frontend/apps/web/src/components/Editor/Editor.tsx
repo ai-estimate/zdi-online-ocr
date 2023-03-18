@@ -1,168 +1,96 @@
-import React, {useEffect, useRef} from 'react';
-import {
-  Editor,
-  RichUtils,
-  EditorState,
-  convertFromHTML,
-  ContentState,
-} from 'draft-js';
-import useStates from 'src/hooks/useState';
-import {Box, Container, Stack, styled, Typography} from '@mui/material';
+import React, {useEffect} from 'react';
+import {Box, Grid, Stack, styled} from '@mui/material';
+import {CKEditor} from '@ckeditor/ckeditor5-react';
+import {debounce} from 'lodash';
+import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import {ToolBar} from './ToolBar';
-import {convertToHTML} from 'draft-convert';
-import debounce from 'lodash/debounce';
-import axios from 'axios';
-import {useRouter} from 'next/router';
-import {setItemToLocalStorage} from 'src/components/LocalStorege';
+import {AsideLoader} from './AsideLoader';
+import {nextSpellAPI} from './utils';
+import {EditorType} from './types';
 
-const postAPI = async (data: any) => {
-  try {
-    const {data: resp} = await axios.post(
-      'http://api.nextspell.com/api_spellcheck',
-      {data},
-      {headers: {'Content-Type': 'multipart/form-data'}},
-    );
-    return resp;
-  } catch (error) {
-    return null;
-  }
-};
-
+let isDirty = false;
 export const ZDIEditor: React.FC = () => {
-  const router = useRouter();
-  const [state, setState] = useStates({
-    editorState: EditorState.createEmpty(),
-  });
-  console.log('EditorState.createEmpty()::', EditorState.createEmpty());
-
-  const myEditor: any = useRef(null);
-  const {pk} = router.query;
-
-  const {editorState} = state;
-
-  const focusEditor = () => {
-    myEditor.current?.focus();
-  };
-
-  useEffect(() => {
-    // check is local storage have data by id
-    const localData = JSON?.parse(localStorage.getItem('docs') || '[]');
-    const content = localData?.filter((item: any) => item.id == pk);
-    if (content?.length > 0) {
-      saveContent(localData[0]?.content);
-    }
-  }, []);
-
-  const loadDataToEditor = (message: string) => {
-    if (message) {
-      const blocksFromHTML = convertFromHTML(message);
-      const state = ContentState.createFromBlockArray(
-        blocksFromHTML.contentBlocks,
-        blocksFromHTML.entityMap,
-      );
-      const newState = EditorState.createWithContent(state);
-      const mungedState = EditorState.forceSelection(
-        newState,
-        editorState.getSelection(),
-      );
-      setState({editorState: mungedState});
-    }
-  };
+  const myRef = React.useRef<EditorType>(null);
+  const [ready, setReady] = React.useState(false);
 
   const saveContent = debounce(async (content) => {
-    const data = await postAPI(content);
+    if (!isDirty) return;
+    const data = await nextSpellAPI(content);
     const message = data?.message;
-    loadDataToEditor(message);
+    if (message) {
+      myRef.current?.setData(message);
+    }
+    isDirty = false;
   }, 360);
 
-  const onChange = (newState: EditorState) => {
-    setState({editorState: newState});
-    const currentPlainText = editorState.getCurrentContent().getPlainText();
-    const newPlainText = newState.getCurrentContent().getPlainText();
-
-    if (currentPlainText.trim() !== newPlainText.trim()) {
-      const rawContentState = newState.getCurrentContent();
-      saveContent(convertToHTML(rawContentState));
-      setItemToLocalStorage('docs', {
-        id: pk,
-        title: pk,
-        content: convertToHTML(rawContentState),
-      });
-    }
-  };
-
-  const handleKeyCommand = (command: any) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      onChange(newState);
-      return 'handled';
-    }
-    return 'not-handled';
-  };
-
-  const toggleToolbar = (inlineStyle: any) => {
-    try {
-      onChange(RichUtils?.toggleInlineStyle(editorState, inlineStyle));
-    } catch (error) {
-      // console.log('error toggleToolbar :::', error);
-    }
-  };
-
-  const toggleBlockType = (blockType: any) => {
-    try {
-      onChange(RichUtils?.toggleBlockType(editorState, blockType));
-    } catch (error) {
-      // console.log('error toggleBlockType :::', error);
-    }
+  const handleBoxClick = (e: any) => {
+    myRef.current?.editing?.view.focus();
   };
 
   return (
-    <Box sx={{height: '100%'}}>
-      <EditorWraperStyled onClick={focusEditor} component="div">
-        <Editor
-          customStyleMap={styleMap}
-          ref={myEditor}
-          editorKey="foobar"
-          editorState={editorState}
-          onChange={onChange}
-          placeholder="Type or paste (⌘+V) your text here!"
-          spellCheck={false}
-          handleKeyCommand={handleKeyCommand}
-        />
-      </EditorWraperStyled>
-      <ToolBarStyled>
-        <Container maxWidth="xl">
-          <ToolBar
-            editorState={editorState}
-            onToggle={toggleToolbar}
-            onToggleBlockType={toggleBlockType}
-          />
-        </Container>
-      </ToolBarStyled>
-    </Box>
+    <EditorWraperStyled sx={{pt: 4}}>
+      <Stack data-name="editorComponent">
+        <Grid container sx={{minHeight: '100%'}}>
+          <Grid item xs={7}>
+            <Box
+              sx={{minHeight: 'calc(100vh - var(--nav-height) - 80px)'}}
+              onClick={handleBoxClick}
+              id="ctoolbar-editor">
+              <CKEditor
+                onReady={(editor: EditorType) => {
+                  editor.ui
+                    .getEditableElement()
+                    ?.parentElement?.parentElement.insertBefore(
+                      editor.ui.view.toolbar.element,
+                      editor.ui.getEditableElement().nextSibling,
+                    );
+                  console.log(Array.from(editor.ui.componentFactory.names()));
+                  myRef.current = editor;
+                  setReady(true);
+                }}
+                config={{
+                  placeholder: 'Type or paste (⌘+V) your text here or',
+                  toolbar: [
+                    'bold',
+                    'italic',
+                    'underline',
+                    '|',
+                    'heading',
+                    'numberedList',
+                    'bulletedList',
+                    'removeFormat',
+                  ],
+                }}
+                editor={DecoupledEditor}
+                data={''}
+                onChange={(event: any, editor: EditorType) => {
+                  const data = editor.getData();
+                  isDirty = true;
+                  saveContent(data);
+                }}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={5}>
+            <AsideLoader />
+          </Grid>
+        </Grid>
+      </Stack>
+    </EditorWraperStyled>
   );
 };
 
-const ToolBarStyled = styled(Stack)({
-  backgroundColor: 'white',
-  color: '#000000bd',
-  position: 'fixed',
-  bottom: 0,
-  left: 0,
-  right: 0,
-  zIndex: 999,
-});
-
-const EditorWraperStyled = styled(Typography)({
-  border: '1px solid gray',
+const EditorWraperStyled = styled(Box)({
   cursor: 'text',
-  padding: '1em',
-  '.DraftEditor-root': {
+  '.ck-editor__editable_inline': {
     margin: 'auto',
-    height: '300px',
     overflowY: 'scroll',
+    fontFamily: 'var(--kh-font-family)',
     fontSize: '18px',
   },
+  '&& .ck-toolbar': {
+    position: 'sticky',
+    bottom: 0,
+    border: 0,
+  },
 });
-
-const styleMap = {};

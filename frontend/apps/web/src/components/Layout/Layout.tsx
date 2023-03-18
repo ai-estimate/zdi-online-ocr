@@ -31,14 +31,22 @@ export const Layout: React.FC<ILayoutProps> = ({children}) => {
           justifyContent="space-between"
           spacing={2}
           sx={{minHeight: TOP_NAV_HEIGHT}}>
-          <Container maxWidth="xl">
+          <Box sx={{px: 4}}>
             <Button onClick={handleGoHome}>
               <Typography variant="h4">NextSpell</Typography>
             </Button>
-          </Container>
+          </Box>
         </Stack>
       </Box>
-      <Box sx={{width: '100%', height: '100%', pt: 6}}>{children}</Box>
+      <Box
+        sx={{
+          width: '100%',
+          height: '100%',
+          px: 4,
+          '--nav-height': `${TOP_NAV_HEIGHT}px`,
+        }}>
+        {children}
+      </Box>
     </>
   );
 };
