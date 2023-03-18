@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {alpha} from '@mui/material/styles';
 import useStates from 'src/hooks/useState';
 import {
-  Button,
   Container,
   Divider,
   Grid,
@@ -22,7 +21,7 @@ if (typeof window !== 'undefined') {
 }
 export const DocumentsLists: React.FC = () => {
   const router = useRouter();
-  const _items = localStorage.getItem('docs');
+  const _items = JSON.parse(localStorage.getItem('docs') || '[]');
   const [state, setState] = useStates({items: _items || []});
 
   const {items} = state;
