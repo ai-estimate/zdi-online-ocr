@@ -19,6 +19,7 @@ const MyApp: React.FC<MyAppProps> = ({Component, ...rest}) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <title>NextSpell</title>
       </Head>
       <ZDIThemeProvider>
         <SnackbarProvider maxSnack={3} autoHideDuration={16000}>
