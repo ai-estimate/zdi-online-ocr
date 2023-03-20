@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
-import {alpha} from '@mui/material/styles';
+import {alpha, styled} from '@mui/material/styles';
 import useStates from 'src/hooks/useState';
 import {
+  Box,
   Container,
   Divider,
   Grid,
@@ -14,6 +15,7 @@ import {
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import {useRouter} from 'next/router';
 import DeleteIcon from '@mui/icons-material/Delete';
+import VoidSvg from '@components/svgs/void_.svg';
 
 let localStorage: any = {getItem: () => null, setItem: () => null};
 if (typeof window !== 'undefined') {
@@ -73,6 +75,20 @@ export const DocumentsLists: React.FC = () => {
             pb: 5,
           }}>
           <Grid container spacing={2}>
+            {items?.length == 0 && (
+              <Stack
+                sx={{
+                  pt: 4,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flex: 1,
+                }}>
+                <ImproSvgStyled>
+                  <VoidSvg />
+                </ImproSvgStyled>
+                <Typography>Document empty !</Typography>
+              </Stack>
+            )}
             {items?.map((item: any, index: number) => (
               <Grid
                 key={index}
@@ -144,3 +160,10 @@ export const DocumentsLists: React.FC = () => {
     </Container>
   );
 };
+
+const ImproSvgStyled = styled(Box)({
+  svg: {
+    width: '16rem !important',
+    height: '16rem !important',
+  },
+});
