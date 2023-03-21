@@ -26,6 +26,7 @@ export const ZCKEditor: React.FC<IProps> = React.memo(
       <Box
         sx={{minHeight: 'calc(100vh - var(--nav-height) - 80px)'}}
         onClick={handleBoxClick}
+        bgcolor="#f9f0e5"
         id="ctoolbar-editor">
         <CKEditor
           onReady={(editor: EditorType) => {

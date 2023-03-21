@@ -23,7 +23,6 @@ export default function MyDocument({emotionStyleTags}: MyDocumentProps) {
       <Head>
         <meta name="theme-color" content="#ffffff" />
         <meta name="emotion-insertion-point" content="" />
-        <title>NextSpell</title>
         <link
           rel="apple-touch-icon"
           sizes="180x180"

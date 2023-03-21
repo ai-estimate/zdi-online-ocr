@@ -17,7 +17,7 @@ const postAPI = async (data: any) => {
     const options = {
       headers: {
         'Content-Type': 'multipart/form-data',
-        'Access-Control-Allow-Origin': 'http://localhost:3000',
+        'Access-Control-Allow-Origin': '*',
       },
     };
 
@@ -47,29 +47,32 @@ export const UploadFile: React.FC = () => {
   });
   const {isLoading, isFailed} = state;
 
-  const onDrop = useCallback(async (acceptedFiles: any) => {
-    // Do something with the files
+  const onDrop = useCallback(
+    async (acceptedFiles: any) => {
+      // Do something with the files
 
-    if (acceptedFiles) {
-      setState({isLoading: true});
-      const resp = await postAPI(acceptedFiles[0]);
-      setState({isLoading: false});
-      if (resp != null) {
-        router.replace(`/nextspell/${resp}`);
-      } else {
-        setState({isFailed: true});
-        setTimeout(() => {
-          setState({isFailed: false});
-        }, 3000);
+      if (acceptedFiles) {
+        setState({isLoading: true});
+        const resp = await postAPI(acceptedFiles[0]);
+        setState({isLoading: false});
+        if (resp != null) {
+          router.replace(`/nextspell/${resp}`);
+        } else {
+          setState({isFailed: true});
+          setTimeout(() => {
+            setState({isFailed: false});
+          }, 3000);
+        }
       }
-    }
-  }, []);
+    },
+    [router, setState],
+  );
 
   const {getRootProps, getInputProps, isDragActive, open} = useDropzone({
     onDrop,
     noClick: true,
     accept: {
-      'image/*': ['.png', '.jpg', '.jpeg', '.bmp'],
+      'image/*': ['.png', '.jpg', '.jpeg'],
     },
   });
 

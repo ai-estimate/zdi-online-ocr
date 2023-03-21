@@ -11,6 +11,9 @@ export const NewFile: React.FC = () => {
   const handleNextSpell = () => {
     router.push(`/nextspell/${Date.now()}`);
   };
+  const handlePDFToImage = () => {
+    console.log('handlePDFToImage:::');
+  };
 
   return (
     <Container maxWidth="xl">
@@ -18,8 +21,13 @@ export const NewFile: React.FC = () => {
         <Typography>Start a new document</Typography>
       </Stack>
       <Stack flexDirection={'row'} gap={0.5}>
-        <ZDINewCard onClick={handleNextSpell} title={'Next spell'} />
+        <ZDINewCard onClick={handleNextSpell} title={'NextSpell'} />
         <UploadFile />
+        {/* <ZDINewCard
+          onClick={handlePDFToImage}
+          title={'PDF to text'}
+          imagePath="/assets/svgs/pdf_to_txt.svg"
+        /> */}
       </Stack>
     </Container>
   );
@@ -43,9 +51,11 @@ export const ZDINewCard = (props: IProps) => {
           height: 186,
           m: 1,
           borderRadius: 0.5,
+          boxShadow: 2,
           borderColor: 'grey.300',
           ':hover': {
             borderColor: 'darkblue',
+            boxShadow: 3,
           },
         }}
         variant="outlined"

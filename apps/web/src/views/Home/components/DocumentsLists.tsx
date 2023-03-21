@@ -16,6 +16,7 @@ import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import {useRouter} from 'next/router';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VoidSvg from '@components/svgs/void_.svg';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 let localStorage: any = {getItem: () => null, setItem: () => null};
 if (typeof window !== 'undefined') {
@@ -24,9 +25,12 @@ if (typeof window !== 'undefined') {
 export const DocumentsLists: React.FC = () => {
   const router = useRouter();
   const _items = JSON.parse(localStorage.getItem('docs') || '[]');
-  const [state, setState] = useStates({items: _items || []});
+  const [state, setState] = useStates({
+    items: _items || [],
+    toCopy: 'Copy To Clipboard',
+  });
 
-  const {items} = state;
+  const {items, toCopy} = state;
 
   const handleSort = () => {
     console.log('sort::');
@@ -40,6 +44,23 @@ export const DocumentsLists: React.FC = () => {
     const _items = items?.filter((i: any) => i.id != item.id);
     localStorage.setItem('docs', JSON.stringify(_items));
     setState({items: _items});
+  };
+
+  const copyToClipboard = (item: any) => {
+    var string = item?.content
+      .replace(/(<([^>]+)>)/gi, '')
+      .replace(/&nbsp;/gi, '\n')
+      .trim();
+    const el = document.createElement('textarea');
+    el.value = string;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    setState({toCopy: 'Copied'});
+    setTimeout(() => {
+      setState({toCopy: 'Copy To Clipboard'});
+    }, 2000);
   };
 
   return (
@@ -60,7 +81,7 @@ export const DocumentsLists: React.FC = () => {
         justifyContent={'space-between'}>
         <Typography variant="h6">Recent documents </Typography>
         <div>
-          <Tooltip title="Sort optons">
+          <Tooltip title="Sort options">
             <IconButton onClick={handleSort}>
               <SortByAlphaIcon />
             </IconButton>
@@ -107,6 +128,7 @@ export const DocumentsLists: React.FC = () => {
                     borderRadius: 0.5,
                     display: 'revert',
                     borderColor: 'grey.300',
+                    boxShadow: 2,
                     ':hover': {
                       borderColor: 'darkblue',
                     },
@@ -117,9 +139,13 @@ export const DocumentsLists: React.FC = () => {
                     <Typography
                       m={2}
                       variant="body2"
-                      sx={{textOverflow: 'ellipsis', overflow: 'hidden'}}>
-                      {item?.content}
-                    </Typography>
+                      dangerouslySetInnerHTML={{
+                        __html: item?.content,
+                      }}
+                      sx={{
+                        textOverflow: 'ellipsis',
+                        overflow: 'hidden',
+                      }}></Typography>
                   </Stack>
                   <Divider />
                   <Stack
@@ -142,15 +168,21 @@ export const DocumentsLists: React.FC = () => {
                     display: 'block',
                     right: 0,
                     bottom: 0,
-                    ':hover': {
-                      '& button': {
-                        color: 'red',
-                      },
-                    },
                   }}>
-                  <IconButton size="small" onClick={() => handleDelete(item)}>
-                    <DeleteIcon />
-                  </IconButton>
+                  <Tooltip title={toCopy}>
+                    <StyledIconButton
+                      size="small"
+                      onClick={() => copyToClipboard(item)}>
+                      <ContentCopyIcon />
+                    </StyledIconButton>
+                  </Tooltip>
+                  <Tooltip title={'Delete'}>
+                    <StyledIconButton
+                      size="small"
+                      onClick={() => handleDelete(item)}>
+                      <DeleteIcon />
+                    </StyledIconButton>
+                  </Tooltip>
                 </Stack>
               </Grid>
             ))}
@@ -160,6 +192,12 @@ export const DocumentsLists: React.FC = () => {
     </Container>
   );
 };
+
+const StyledIconButton = styled(IconButton)({
+  ':hover': {
+    color: 'darkblue',
+  },
+});
 
 const ImproSvgStyled = styled(Box)({
   svg: {
