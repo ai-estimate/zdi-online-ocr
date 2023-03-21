@@ -1,43 +1,18 @@
 import React, {useCallback} from 'react';
 import {useDropzone} from 'react-dropzone';
-import axios from 'axios';
 import useStates from 'src/hooks/useState';
-import {Alert, Paper, Snackbar, Stack, Typography} from '@mui/material';
-import {setItemToLocalStorage} from 'src/components/LocalStorege';
+import {
+  Alert,
+  CircularProgress,
+  Paper,
+  Snackbar,
+  Stack,
+  Typography,
+} from '@mui/material';
 import {ZDINewCard} from './NewFile';
 import {useRouter} from 'next/router';
-
-const postAPI = async (data: any) => {
-  try {
-    const name = data?.name;
-    const clean = name?.replace(/[^a-zA-Z0-9]/g, '');
-    const url = 'http://api.nextspell.com/khmerocr_api';
-    let formData = new FormData();
-    formData.append('file', data);
-    const options = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'Access-Control-Allow-Origin': '*',
-      },
-    };
-
-    const resp = await axios.post(url, formData, options);
-    const _id = Date.now();
-
-    if (resp.status === 200) {
-      const {data} = resp;
-
-      setItemToLocalStorage('docs', {
-        id: _id,
-        title: clean,
-        content: data?.message,
-      });
-    }
-    return _id;
-  } catch (error) {
-    return null;
-  }
-};
+import {nextSpellAPI} from './utils';
+import {TOP_NAV_HEIGHT} from 'src/components/Layout';
 
 export const UploadFile: React.FC = () => {
   const router = useRouter();
@@ -53,7 +28,9 @@ export const UploadFile: React.FC = () => {
 
       if (acceptedFiles) {
         setState({isLoading: true});
-        const resp = await postAPI(acceptedFiles[0]);
+
+        const resp = await nextSpellAPI(acceptedFiles[0]);
+
         setState({isLoading: false});
         if (resp != null) {
           router.replace(`/nextspell/${resp}`);
@@ -84,13 +61,7 @@ export const UploadFile: React.FC = () => {
       ) : (
         <>
           {IconAlerts(isFailed)}
-          {isLoading && (
-            <ZDINewCard
-              title={'Loading . . .'}
-              onClick={open}
-              imagePath={'/assets/gif/loading_2.gif'}
-            />
-          )}
+          {isLoading && <ZDILoading />}
           {!isLoading && (
             <ZDINewCard
               title={'Image to text'}
@@ -142,3 +113,36 @@ export default function IconAlerts(open: boolean) {
     </Stack>
   );
 }
+
+const ZDILoading: React.FC = () => {
+  return (
+    <Paper
+      sx={{
+        cursor: 'progress',
+        width: 'calc(100% - 20px)',
+        height: `calc(100% - 10px - ${TOP_NAV_HEIGHT}px)`,
+        borderRadius: 0.5,
+        borderColor: 'grey.500',
+        justifyContent: 'center',
+        display: 'flex',
+        position: 'fixed',
+        top: `${TOP_NAV_HEIGHT}`,
+        bottom: 10,
+        right: 10,
+        left: 10,
+        zIndex: 1100,
+      }}
+      variant="outlined">
+      <Stack
+        sx={{
+          alignItems: 'center',
+          alignSelf: 'center',
+        }}>
+        <CircularProgress sx={{color: 'darkblue'}} size={120} />
+        <Typography pt={2} variant="h5">
+          Uploading ...
+        </Typography>
+      </Stack>
+    </Paper>
+  );
+};

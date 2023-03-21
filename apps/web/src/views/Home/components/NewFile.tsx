@@ -4,12 +4,13 @@ import {Container, Paper, Stack, Typography} from '@mui/material';
 import {useRouter} from 'next/router';
 import {styled} from '@mui/material/styles';
 import {UploadFile} from './UploadFile';
+import {generate6RandomId} from './utils';
 
 export const NewFile: React.FC = () => {
   const router = useRouter();
 
   const handleNextSpell = () => {
-    router.push(`/nextspell/${Date.now()}`);
+    router.push(`/nextspell/${generate6RandomId()}`);
   };
   const handlePDFToImage = () => {
     console.log('handlePDFToImage:::');
