@@ -7,7 +7,7 @@ export const nextSpellAPI = async (data: any) => {
   source = CancelToken.source();
   try {
     const {data: resp} = await axios.post(
-      'http://api.nextspell.com/api_spellcheck',
+      '/api/api_spellcheck',
       {data},
       {
         headers: {'Content-Type': 'multipart/form-data'},
