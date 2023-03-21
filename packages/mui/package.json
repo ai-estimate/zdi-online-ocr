@@ -22,12 +22,12 @@
     "next": "13.2.4",
     "react": "*",
     "react-dom": "*",
-    "simplebar-react": "^3.2.1"
+    "simplebar-react": "^3.2.2"
   },
   "devDependencies": {
     "@types/jest": "29.5.0",
     "@types/lodash": "*",
-    "@types/node": "18.15.3",
+    "@types/node": "18.15.5",
     "@types/react": "*",
     "@types/react-dom": "*",
     "eslint": "^8.36.0",

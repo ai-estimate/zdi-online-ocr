@@ -45,7 +45,7 @@
   "devDependencies": {
     "@types/ckeditor__ckeditor5-build-decoupled-document": "^29.1.1",
     "@types/lodash": "^4.14.191",
-    "@types/node": "^18.15.3",
+    "@types/node": "^18.15.5",
     "@types/nprogress": "^0.2.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
