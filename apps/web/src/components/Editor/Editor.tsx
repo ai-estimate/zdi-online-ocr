@@ -22,9 +22,9 @@ export const ZDIEditor: React.FC = () => {
     setLoading(true);
     const data = await nextSpellAPI(content);
     const message = data?.message;
-    if (message) {
-      myRef.current?.setData(message);
-    }
+    // if (message) {
+    //   myRef.current?.setData(message);
+    // }
     setItemToLocalStorage('docs', {
       id: pk,
       title: pk,
@@ -39,11 +39,16 @@ export const ZDIEditor: React.FC = () => {
     <EditorWraperStyled sx={{pt: 4}}>
       <Stack data-name="editorComponent">
         <Grid container sx={{minHeight: '100%'}}>
-          <Grid item xs={12} md={8}>
-            <ZCKEditor data={data} onChange={saveContent} myRef={myRef} />
+          <Grid item xs={12} md={5}>
+            <ZCKEditor
+              data={data}
+              onChange={saveContent}
+              myRef={myRef}
+              isEditerUI={true}
+            />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <AsideLoader loading={loading} />
+          <Grid item xs={12} md={7}>
+            <AsideLoader loading={loading} data={data} />
           </Grid>
         </Grid>
       </Stack>

@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Box,
+  LinearProgress,
   Skeleton,
   Stack,
   styled,
@@ -9,10 +10,18 @@ import {
 } from '@mui/material';
 import ImproSvg from '@components/svgs/improment.svg';
 
+import {Koh_Santepheap} from 'next/font/google';
+
+const khmerFont = Koh_Santepheap({
+  weight: ['300', '400', '700'],
+  subsets: ['latin', 'khmer'],
+  display: 'swap',
+});
 interface IProps {
   loading: boolean;
+  data: any;
 }
-export const AsideLoader: React.FC<IProps> = React.memo(({loading}) => {
+export const AsideLoader: React.FC<IProps> = React.memo(({loading, data}) => {
   return (
     <StackStyled
       justifyContent="center"
@@ -22,15 +31,23 @@ export const AsideLoader: React.FC<IProps> = React.memo(({loading}) => {
         top: 'var(--nav-height)',
       }}>
       {loading ? (
-        <Loading />
+        <Box sx={{width: '100%'}}>
+          <LinearProgress />
+        </Box>
       ) : (
-        <Stack sx={{pt: 8}}>
-          <ImproSvgStyled>
-            <ImproSvg />
-          </ImproSvgStyled>
-          <Typography>That’s quite an improvement!</Typography>
-        </Stack>
+        <>
+          <Box sx={{height: 4}}></Box>
+        </>
       )}
+      <Stack sx={{px: 8, py: 4, width: '100%'}}>
+        <Box sx={{'--kh-font-family': khmerFont.style.fontFamily}}>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: data,
+            }}
+          />
+        </Box>
+      </Stack>
     </StackStyled>
   );
 });

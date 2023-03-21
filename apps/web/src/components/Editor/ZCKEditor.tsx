@@ -9,9 +9,10 @@ interface IProps {
   data: string | undefined;
   onChange(data: string): Promise<void>;
   myRef?: any;
+  isEditerUI?: boolean;
 }
 export const ZCKEditor: React.FC<IProps> = React.memo(
-  ({data, myRef, onChange}) => {
+  ({data, myRef, onChange, isEditerUI}) => {
     const saveContent = debounce(async (content) => {
       if (!isDirty) return;
       await onChange(content);
@@ -30,12 +31,14 @@ export const ZCKEditor: React.FC<IProps> = React.memo(
         id="ctoolbar-editor">
         <CKEditor
           onReady={(editor: EditorType) => {
-            editor.ui
-              .getEditableElement()
-              ?.parentElement?.parentElement.insertBefore(
-                editor.ui.view.toolbar.element,
-                editor.ui.getEditableElement().nextSibling,
-              );
+            if (isEditerUI) {
+              editor.ui
+                .getEditableElement()
+                ?.parentElement?.parentElement.insertBefore(
+                  editor.ui.view.toolbar.element,
+                  editor.ui.getEditableElement().nextSibling,
+                );
+            }
             myRef.current = editor;
           }}
           config={{
