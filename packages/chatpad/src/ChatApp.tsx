@@ -68,11 +68,6 @@ export const ZDIChatApp: React.FC<IProps> = ({children}) => {
                 blur: 6,
               },
             },
-            // Input: {
-            //   defaultProps: {
-            //     variant: "filled",
-            //   },
-            // },
             InputWrapper: {
               styles: {
                 label: {

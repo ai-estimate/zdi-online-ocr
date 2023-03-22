@@ -60,13 +60,7 @@ export function ChatRoute() {
       });
       setContent('');
 
-      const result: string = await createChatCompletion([
-        ...(messages ?? []).map((message) => ({
-          role: message.role,
-          content: message.content,
-        })),
-        {role: 'user', content},
-      ]);
+      const result: string = await createChatCompletion([content]);
 
       const assistantMessage = result;
 
