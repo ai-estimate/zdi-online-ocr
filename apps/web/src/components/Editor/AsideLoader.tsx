@@ -33,7 +33,7 @@ export const AsideLoader: React.FC<IProps> = React.memo(
             <Box sx={{height: 4}}></Box>
           </>
         )}
-        <Stack sx={{px: 8, py: 4, width: '100%'}}>{children}</Stack>
+        <Stack sx={{px: 8, width: '100%'}}>{children}</Stack>
       </StackStyled>
     );
   },

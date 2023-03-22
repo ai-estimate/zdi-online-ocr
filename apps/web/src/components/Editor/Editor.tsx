@@ -35,7 +35,8 @@ export const ZDIEditor: React.FC = () => {
     setLoading(false);
   };
 
-  const data = getData(pk);
+  var data = getData(pk);
+  if (!data){data=''}
   const strippedHtml = data?.replace(/<[^>]+>/g, '');
 
   return (
@@ -43,7 +44,7 @@ export const ZDIEditor: React.FC = () => {
       <Stack data-name="editorComponent">
         <Grid container sx={{minHeight: '100%'}}>
           <Grid item xs={12} md={5}>
-            <Box sx={{height: 4}} />
+            <Box sx={{height: 4, bgcolor:"#f9f0e5"}} />
             <ZCKEditor
               data={strippedHtml}
               onChange={saveContent}
