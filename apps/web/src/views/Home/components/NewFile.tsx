@@ -21,7 +21,12 @@ export const NewFile: React.FC = () => {
       <Stack px={2} py={1}>
         <Typography>Start a new document</Typography>
       </Stack>
-      <Stack flexDirection={'row'} gap={0.5}>
+      <Stack
+        flexDirection={'row'}
+        gap={0.5}
+        sx={{
+          overflowX: 'auto',
+        }}>
         <ZDINewCard onClick={handleNextSpell} title={'NextSpell'} />
         <UploadFile />
         {/* <ZDINewCard

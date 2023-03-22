@@ -18,6 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import VoidSvg from '@components/svgs/void_.svg';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import {Koh_Santepheap} from 'next/font/google';
+import ChatIcon from '@mui/icons-material/Chat';
 
 let localStorage: any = {getItem: () => null, setItem: () => null};
 if (typeof window !== 'undefined') {
@@ -224,6 +225,7 @@ export const DocumentsLists: React.FC = () => {
           </Grid>
         </Grid>
       </Grid>
+      <ZDIChat />
     </Container>
   );
 };
@@ -244,3 +246,32 @@ const ImproSvgStyled = styled(Box)({
 const TypographyStyled = styled(Typography)({
   fontFamily: khmerFont.style.fontFamily,
 });
+
+const ZDIChat = () => {
+  const router = useRouter();
+  const handelClick = () => {
+    router.push(`/chatzdi`);
+  };
+
+  return (
+    <Stack
+      sx={{
+        position: 'fixed',
+        bottom: 20,
+        right: 20,
+      }}>
+      <Tooltip title={'Chat with ZDI Chatbot AI'} placement="left">
+        <IconButton
+          color="success"
+          sx={{
+            width: 50,
+            height: 50,
+            backgroundColor: '#e6e9ec',
+          }}
+          onClick={() => handelClick()}>
+          <ChatIcon sx={{width: 35, height: 35}} />
+        </IconButton>
+      </Tooltip>
+    </Stack>
+  );
+};
