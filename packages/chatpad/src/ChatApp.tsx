@@ -1,7 +1,8 @@
 import React from 'react';
 import {ColorScheme, ColorSchemeProvider, MantineProvider} from '@mantine/core';
 import {useHotkeys, useLocalStorage} from '@mantine/hooks';
-import {ChatBox} from './components';
+import {Layout} from './components/Layout';
+import {Notifications} from '@mantine/notifications';
 
 let window = {matchMedia: () => {}} as any;
 if (typeof window !== 'undefined') {
@@ -81,7 +82,8 @@ export const ZDIChatApp: React.FC<IProps> = ({children}) => {
             },
           },
         }}>
-        <ChatBox />
+        <Layout />
+        <Notifications />
       </MantineProvider>
     </ColorSchemeProvider>
   );

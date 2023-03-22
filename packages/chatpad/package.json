@@ -15,11 +15,15 @@
     "@mantine/notifications": "^6.0.4",
     "@tabler/icons-react": "^2.11.0",
     "@zdi/mui": "workspace:*",
+    "axios": "^1.3.4",
     "dexie": "^3.2.3",
     "dexie-export-import": "^4.0.6",
     "dexie-react-hooks": "^1.1.3",
+    "nanoid": "^4.0.1",
+    "next": "13.2.4",
     "react-icons": "^4.8.0",
-    "react-markdown": "^8.0.6"
+    "react-markdown": "^8.0.6",
+    "downloadjs": "^1.4.7"
   },
   "devDependencies": {
     "@types/jest": "29.5.0",
@@ -30,6 +34,7 @@
     "eslint": "^8.36.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.2",
+    "@types/downloadjs": "^1.4.3"
   }
 }

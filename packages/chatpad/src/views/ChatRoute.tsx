@@ -5,8 +5,6 @@ import {
   Container,
   Flex,
   MediaQuery,
-  Select,
-  SimpleGrid,
   Skeleton,
   Stack,
   Textarea,
@@ -17,27 +15,19 @@ import {findLast} from 'lodash';
 import {nanoid} from 'nanoid';
 import {useState} from 'react';
 import {AiOutlineSend} from 'react-icons/ai';
-import {MessageItem} from './MessageItem';
+import {MessageItem} from '../components/MessageItem';
 import {db} from '../db';
 import {useChatId} from '../hooks/useChatId';
-import {
-  writingCharacters,
-  writingFormats,
-  writingStyles,
-  writingTones,
-} from '../utils/constants';
+import {createChatCompletion} from '../utils/openai';
 
-const createChatCompletion = async (apiKey: string, messages: any[]) => {};
-
-export function ChatBox() {
+export function ChatRoute() {
   const chatId = useChatId();
-  const apiKey = useLiveQuery(async () => {
-    return (await db.settings.where({id: 'general'}).first())?.openAiApiKey;
-  });
+
   const messages = useLiveQuery(() => {
     if (!chatId) return [];
     return db.messages.where('chatId').equals(chatId).sortBy('createdAt');
   }, [chatId]);
+
   const [content, setContent] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -45,24 +35,6 @@ export function ChatBox() {
     if (!chatId) return null;
     return db.chats.get(chatId);
   }, [chatId]);
-
-  const [writingCharacter, setWritingCharacter] = useState<string | null>(null);
-  const [writingTone, setWritingTone] = useState<string | null>(null);
-  const [writingStyle, setWritingStyle] = useState<string | null>(null);
-  const [writingFormat, setWritingFormat] = useState<string | null>(null);
-
-  const getSystemMessage = () => {
-    const message: string[] = [];
-    if (writingCharacter) message.push(`You are ${writingCharacter}.`);
-    if (writingTone) message.push(`Respond in ${writingTone} tone.`);
-    if (writingStyle) message.push(`Respond in ${writingStyle} style.`);
-    if (writingFormat) message.push(writingFormat);
-    if (message.length === 0)
-      message.push(
-        'You are ChatGPT, a large language model trained by OpenAI.',
-      );
-    return message.join(' ');
-  };
 
   const submit = async () => {
     if (submitting) return;
@@ -72,15 +44,6 @@ export function ChatBox() {
         title: 'Error',
         color: 'red',
         message: 'chatId is not defined. Please create a chat to get started.',
-      });
-      return;
-    }
-
-    if (!apiKey) {
-      notifications.show({
-        title: 'Error',
-        color: 'red',
-        message: 'OpenAI API Key is not defined. Please set your API Key',
       });
       return;
     }
@@ -97,11 +60,7 @@ export function ChatBox() {
       });
       setContent('');
 
-      const result = await createChatCompletion(apiKey, [
-        {
-          role: 'system',
-          content: getSystemMessage(),
-        },
+      const result: string = await createChatCompletion([
         ...(messages ?? []).map((message) => ({
           role: message.role,
           content: message.content,
@@ -109,16 +68,8 @@ export function ChatBox() {
         {role: 'user', content},
       ]);
 
-      const assistantMessage = result.data.choices[0].message?.content;
-      if (result.data.usage) {
-        await db.chats.where({id: chatId}).modify((chat) => {
-          if (chat.totalTokens) {
-            chat.totalTokens += result.data.usage!.total_tokens;
-          } else {
-            chat.totalTokens = result.data.usage!.total_tokens;
-          }
-        });
-      }
+      const assistantMessage = result;
+
       setSubmitting(false);
 
       await db.messages.add({
@@ -131,11 +82,7 @@ export function ChatBox() {
 
       if (chat?.description === 'New Chat') {
         const messages = await db.messages.where({chatId}).sortBy('createdAt');
-        const createChatDscription = await createChatCompletion(apiKey, [
-          {
-            role: 'system',
-            content: getSystemMessage(),
-          },
+        const createChatDscription = await createChatCompletion([
           ...(messages ?? []).map((message) => ({
             role: message.role,
             content: message.content,
@@ -161,7 +108,7 @@ export function ChatBox() {
         }
       }
     } catch (error: any) {
-      if (error.toJSON().message === 'Network Error') {
+      if (error.message === 'Network Error') {
         notifications.show({
           title: 'Error',
           color: 'red',
@@ -217,56 +164,6 @@ export function ChatBox() {
               : theme.colors.gray[0],
         })}>
         <Container>
-          {messages?.length === 0 && (
-            <SimpleGrid
-              mb="sm"
-              spacing="xs"
-              breakpoints={[
-                {minWidth: 'sm', cols: 4},
-                {maxWidth: 'sm', cols: 2},
-              ]}>
-              <Select
-                value={writingCharacter}
-                onChange={setWritingCharacter}
-                data={writingCharacters}
-                placeholder="Character"
-                variant="filled"
-                searchable
-                clearable
-                sx={{flex: 1}}
-              />
-              <Select
-                value={writingTone}
-                onChange={setWritingTone}
-                data={writingTones}
-                placeholder="Tone"
-                variant="filled"
-                searchable
-                clearable
-                sx={{flex: 1}}
-              />
-              <Select
-                value={writingStyle}
-                onChange={setWritingStyle}
-                data={writingStyles}
-                placeholder="Style"
-                variant="filled"
-                searchable
-                clearable
-                sx={{flex: 1}}
-              />
-              <Select
-                value={writingFormat}
-                onChange={setWritingFormat}
-                data={writingFormats}
-                placeholder="Format"
-                variant="filled"
-                searchable
-                clearable
-                sx={{flex: 1}}
-              />
-            </SimpleGrid>
-          )}
           <Flex gap="sm">
             <Textarea
               key={chatId}
