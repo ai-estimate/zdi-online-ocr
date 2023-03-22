@@ -7,8 +7,9 @@ export const TOP_NAV_HEIGHT = 64;
 
 interface ILayoutProps {
   children: React.ReactNode;
+  branch?: string;
 }
-export const Layout: React.FC<ILayoutProps> = ({children}) => {
+export const Layout: React.FC<ILayoutProps> = ({children, branch}) => {
   const router = useRouter();
   const handleGoHome = () => {
     router.push('/');
@@ -33,7 +34,7 @@ export const Layout: React.FC<ILayoutProps> = ({children}) => {
           sx={{minHeight: TOP_NAV_HEIGHT}}>
           <Box sx={{px: 4}}>
             <Button onClick={handleGoHome}>
-              <Typography variant="h4">NextSpell</Typography>
+              <Typography variant="h4">{branch || 'NextSpell'}</Typography>
             </Button>
           </Box>
         </Stack>
