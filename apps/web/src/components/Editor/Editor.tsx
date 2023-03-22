@@ -15,6 +15,7 @@ const getData = (pk: any) => {
 export const ZDIEditor: React.FC = () => {
   const router = useRouter();
   const myRef: any = React.createRef();
+
   const liveRef: any = React.createRef();
   const {pk} = router.query;
   const [loading, setLoading] = useState(false);
@@ -53,7 +54,7 @@ export const ZDIEditor: React.FC = () => {
           </Grid>
           <Grid item xs={12} md={7}>
             <AsideLoader loading={loading}>
-              <ZCKEditor data={data} onChange={saveContent} myRef={liveRef} />
+              <ZCKEditor data={data} myRef={liveRef} />
             </AsideLoader>
           </Grid>
         </Grid>

@@ -3,11 +3,11 @@ import {Box, debounce} from '@mui/material';
 import {CKEditor} from '@ckeditor/ckeditor5-react';
 import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import {EditorType} from './types';
+import {isFunction} from 'lodash';
 
-let isDirty = false;
 interface IProps {
   data: string | undefined;
-  onChange(data: string): Promise<void>;
+  onChange?(data: string): Promise<void>;
   myRef?: any;
   isEditerUI?: boolean;
   isBgcolor?: boolean;
@@ -15,9 +15,7 @@ interface IProps {
 export const ZCKEditor: React.FC<IProps> = React.memo(
   ({data, myRef, onChange, isEditerUI, isBgcolor}) => {
     const saveContent = debounce(async (content) => {
-      if (!isDirty) return;
-      await onChange(content);
-      isDirty = false;
+      await onChange?.(content);
     }, 360);
 
     const handleBoxClick = (e: any) => {
@@ -58,9 +56,10 @@ export const ZCKEditor: React.FC<IProps> = React.memo(
           editor={DecoupledEditor}
           data={data}
           onChange={(event: any, editor: EditorType) => {
-            const data = editor.getData();
-            isDirty = true;
-            saveContent(data);
+            if (isFunction(onChange)) {
+              const data = editor.getData();
+              saveContent(data);
+            }
           }}
         />
       </Box>
