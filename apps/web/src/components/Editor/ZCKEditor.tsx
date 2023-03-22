@@ -10,9 +10,10 @@ interface IProps {
   onChange(data: string): Promise<void>;
   myRef?: any;
   isEditerUI?: boolean;
+  isBgcolor?: boolean;
 }
 export const ZCKEditor: React.FC<IProps> = React.memo(
-  ({data, myRef, onChange, isEditerUI}) => {
+  ({data, myRef, onChange, isEditerUI, isBgcolor}) => {
     const saveContent = debounce(async (content) => {
       if (!isDirty) return;
       await onChange(content);
@@ -27,7 +28,7 @@ export const ZCKEditor: React.FC<IProps> = React.memo(
       <Box
         sx={{minHeight: 'calc(100vh - var(--nav-height) - 80px)'}}
         onClick={handleBoxClick}
-        bgcolor="#f9f0e5"
+        bgcolor={isBgcolor ? '#f9f0e5' : ''}
         id="ctoolbar-editor">
         <CKEditor
           onReady={(editor: EditorType) => {

@@ -17,23 +17,55 @@ import {useRouter} from 'next/router';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VoidSvg from '@components/svgs/void_.svg';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import {Koh_Santepheap} from 'next/font/google';
 
 let localStorage: any = {getItem: () => null, setItem: () => null};
 if (typeof window !== 'undefined') {
   localStorage = window.localStorage;
 }
+
+const khmerFont = Koh_Santepheap({
+  weight: ['300', '400', '700'],
+  subsets: ['latin', 'khmer'],
+  display: 'swap',
+});
+
 export const DocumentsLists: React.FC = () => {
   const router = useRouter();
   const _items = JSON.parse(localStorage.getItem('docs') || '[]');
   const [state, setState] = useStates({
     items: _items || [],
     toCopy: 'Copy To Clipboard',
+    sort: 'ascending',
   });
 
-  const {items, toCopy} = state;
+  const {items, toCopy, sort} = state;
 
   const handleSort = () => {
-    console.log('sort::');
+    if (items.length == 0) return;
+    if (state.sort == 'ascending') {
+      items.sort((a: any, b: any) => {
+        if (a.title < b.title) {
+          return -1;
+        }
+        if (a.title > b.title) {
+          return 1;
+        }
+        return 0;
+      });
+      setState({sort: 'descending', items: items});
+    } else {
+      items.sort((a: any, b: any) => {
+        if (a.title > b.title) {
+          return -1;
+        }
+        if (a.title < b.title) {
+          return 1;
+        }
+        return 0;
+      });
+      setState({sort: 'ascending', items: items});
+    }
   };
 
   const handleEdit = (item: any) => {
@@ -62,6 +94,7 @@ export const DocumentsLists: React.FC = () => {
       setState({toCopy: 'Copy To Clipboard'});
     }, 2000);
   };
+  const reverseItems = items?.reverse();
 
   return (
     <Container maxWidth="xl">
@@ -81,7 +114,7 @@ export const DocumentsLists: React.FC = () => {
         justifyContent={'space-between'}>
         <Typography variant="h6">Recent documents </Typography>
         <div>
-          <Tooltip title="Sort options">
+          <Tooltip title={`Sort by name ${sort}`}>
             <IconButton onClick={handleSort}>
               <SortByAlphaIcon />
             </IconButton>
@@ -110,82 +143,84 @@ export const DocumentsLists: React.FC = () => {
                 <Typography>Document empty !</Typography>
               </Stack>
             )}
-            {items?.map((item: any, index: number) => (
-              <Grid
-                key={index}
-                item
-                position={'relative'}
-                sx={{
-                  width: 230,
-                  height: 358,
-                }}>
-                <Paper
+            {reverseItems?.map((item: any, index: number) => {
+              const strippedHtml = item?.content
+                ?.replace(/<[^>]+>/g, '')
+                .replace(/&nbsp;/gi, '\n')
+                .trim();
+              return (
+                <Grid
+                  key={index}
+                  item
+                  position={'relative'}
                   sx={{
-                    cursor: 'pointer',
-                    width: 210,
-                    height: 338,
-                    m: 1,
-                    borderRadius: 0.5,
-                    display: 'revert',
-                    borderColor: 'grey.300',
-                    boxShadow: 2,
-                    ':hover': {
-                      borderColor: 'darkblue',
-                    },
-                  }}
-                  variant="outlined"
-                  onClick={() => handleEdit(item)}>
-                  <Stack height={263}>
-                    <Typography
-                      m={2}
-                      variant="body2"
-                      dangerouslySetInnerHTML={{
-                        __html: item?.content,
-                      }}
-                      sx={{
-                        textOverflow: 'ellipsis',
-                        overflow: 'hidden',
-                      }}></Typography>
-                  </Stack>
-                  <Divider />
-                  <Stack
-                    sx={{
-                      pl: 1.5,
-                      pr: 1,
-                      pt: 2,
-                    }}
-                    height={75}>
-                    <Typography variant="subtitle2" noWrap>
-                      {item.title}
-                    </Typography>
-                  </Stack>
-                </Paper>
-                <Stack
-                  flexDirection={'row'}
-                  justifyContent={'flex-end'}
-                  sx={{
-                    position: 'absolute',
-                    display: 'block',
-                    right: 0,
-                    bottom: 0,
+                    width: 230,
+                    height: 358,
                   }}>
-                  <Tooltip title={toCopy}>
-                    <StyledIconButton
-                      size="small"
-                      onClick={() => copyToClipboard(item)}>
-                      <ContentCopyIcon />
-                    </StyledIconButton>
-                  </Tooltip>
-                  <Tooltip title={'Delete'}>
-                    <StyledIconButton
-                      size="small"
-                      onClick={() => handleDelete(item)}>
-                      <DeleteIcon />
-                    </StyledIconButton>
-                  </Tooltip>
-                </Stack>
-              </Grid>
-            ))}
+                  <Paper
+                    sx={{
+                      cursor: 'pointer',
+                      width: 210,
+                      height: 338,
+                      m: 1,
+                      borderRadius: 0.5,
+                      display: 'revert',
+                      borderColor: 'grey.300',
+                      boxShadow: 2,
+                      ':hover': {
+                        borderColor: 'darkblue',
+                      },
+                    }}
+                    variant="outlined"
+                    onClick={() => handleEdit(item)}>
+                    <Stack height={263}>
+                      <TypographyStyled
+                        m={2}
+                        sx={{
+                          textOverflow: 'ellipsis',
+                          overflow: 'hidden',
+                        }}>
+                        {strippedHtml}
+                      </TypographyStyled>
+                    </Stack>
+                    <Divider />
+                    <Stack
+                      sx={{
+                        pl: 1.5,
+                        pr: 1,
+                        pt: 2,
+                      }}
+                      height={75}>
+                      <TypographyStyled noWrap>{item.title}</TypographyStyled>
+                    </Stack>
+                  </Paper>
+                  <Stack
+                    flexDirection={'row'}
+                    justifyContent={'flex-end'}
+                    sx={{
+                      position: 'absolute',
+                      display: 'block',
+                      right: 0,
+                      bottom: 0,
+                    }}>
+                    <Tooltip title={toCopy}>
+                      <StyledIconButton
+                        size="small"
+                        onClick={() => copyToClipboard(item)}>
+                        <ContentCopyIcon />
+                      </StyledIconButton>
+                    </Tooltip>
+                    <Tooltip title={'Delete'}>
+                      <StyledIconButton
+                        size="small"
+                        onClick={() => handleDelete(item)}>
+                        <DeleteIcon />
+                      </StyledIconButton>
+                    </Tooltip>
+                  </Stack>
+                </Grid>
+              );
+            })}
           </Grid>
         </Grid>
       </Grid>
@@ -204,4 +239,8 @@ const ImproSvgStyled = styled(Box)({
     width: '16rem !important',
     height: '16rem !important',
   },
+});
+
+const TypographyStyled = styled(Typography)({
+  fontFamily: khmerFont.style.fontFamily,
 });

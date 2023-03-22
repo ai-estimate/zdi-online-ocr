@@ -8,49 +8,36 @@ import {
   Typography,
   TypographyProps,
 } from '@mui/material';
-import ImproSvg from '@components/svgs/improment.svg';
 
-import {Koh_Santepheap} from 'next/font/google';
-
-const khmerFont = Koh_Santepheap({
-  weight: ['300', '400', '700'],
-  subsets: ['latin', 'khmer'],
-  display: 'swap',
-});
 interface IProps {
   loading: boolean;
-  data: any;
+  data?: any;
+  children?: any;
 }
-export const AsideLoader: React.FC<IProps> = React.memo(({loading, data}) => {
-  return (
-    <StackStyled
-      justifyContent="center"
-      alignItems="center"
-      sx={{
-        position: 'sticky',
-        top: 'var(--nav-height)',
-      }}>
-      {loading ? (
-        <Box sx={{width: '100%'}}>
-          <LinearProgress />
-        </Box>
-      ) : (
-        <>
-          <Box sx={{height: 4}}></Box>
-        </>
-      )}
-      <Stack sx={{px: 8, py: 4, width: '100%'}}>
-        <Box sx={{'--kh-font-family': khmerFont.style.fontFamily}}>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: data,
-            }}
-          />
-        </Box>
-      </Stack>
-    </StackStyled>
-  );
-});
+export const AsideLoader: React.FC<IProps> = React.memo(
+  ({loading, data, children}) => {
+    return (
+      <StackStyled
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          position: 'sticky',
+          top: 'var(--nav-height)',
+        }}>
+        {loading ? (
+          <Box sx={{width: '100%'}}>
+            <LinearProgress />
+          </Box>
+        ) : (
+          <>
+            <Box sx={{height: 4}}></Box>
+          </>
+        )}
+        <Stack sx={{px: 8, py: 4, width: '100%'}}>{children}</Stack>
+      </StackStyled>
+    );
+  },
+);
 
 const variants = [
   'h1',
@@ -78,11 +65,9 @@ const Loading = ({loading = true}) => {
   );
 };
 
-const StackStyled = styled(Stack)({height: 'auto', zIndex: 10, flex: 1});
-
-const ImproSvgStyled = styled(Box)({
-  svg: {
-    width: '16rem !important',
-    height: '16rem !important',
-  },
+const StackStyled = styled(Stack)({
+  height: 'auto',
+  zIndex: 10,
+  flex: 1,
+  cursor: 'copy',
 });

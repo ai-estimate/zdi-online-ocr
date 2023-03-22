@@ -15,6 +15,7 @@ const getData = (pk: any) => {
 export const ZDIEditor: React.FC = () => {
   const router = useRouter();
   const myRef: any = React.createRef();
+  const liveRef: any = React.createRef();
   const {pk} = router.query;
   const [loading, setLoading] = useState(false);
 
@@ -22,9 +23,9 @@ export const ZDIEditor: React.FC = () => {
     setLoading(true);
     const data = await nextSpellAPI(content);
     const message = data?.message;
-    // if (message) {
-    //   myRef.current?.setData(message);
-    // }
+    if (message) {
+      liveRef.current?.setData(message);
+    }
     setItemToLocalStorage('docs', {
       id: pk,
       title: pk,
@@ -34,21 +35,26 @@ export const ZDIEditor: React.FC = () => {
   };
 
   const data = getData(pk);
+  const strippedHtml = data?.replace(/<[^>]+>/g, '');
 
   return (
     <EditorWraperStyled sx={{pt: 4}}>
       <Stack data-name="editorComponent">
         <Grid container sx={{minHeight: '100%'}}>
           <Grid item xs={12} md={5}>
+            <Box sx={{height: 4}} />
             <ZCKEditor
-              data={data}
+              data={strippedHtml}
               onChange={saveContent}
               myRef={myRef}
               isEditerUI={true}
+              isBgcolor={true}
             />
           </Grid>
           <Grid item xs={12} md={7}>
-            <AsideLoader loading={loading} data={data} />
+            <AsideLoader loading={loading}>
+              <ZCKEditor data={data} onChange={saveContent} myRef={liveRef} />
+            </AsideLoader>
           </Grid>
         </Grid>
       </Stack>
