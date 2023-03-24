@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Box, Grid, Stack, styled} from '@mui/material';
 import {AsideLoader} from './AsideLoader';
 import {nextSpellAPI} from './utils';
@@ -39,7 +39,17 @@ export const ZDIEditor: React.FC = () => {
   };
 
   var data = getData(pk);
+  const isDataHaveBlue = data?.includes('blue');
   const strippedHtml = data?.replace(/<[^>]+>/g, '');
+
+  const handelClick = useCallback((etst: any, isBlue: boolean) => {
+    if (isBlue == false) return;
+    if (isBlue == true) {
+      setLoading(true);
+      myRef.current?.setData(`${etst}`);
+      setLoading(false);
+    }
+  }, []);
 
   return (
     <EditorWraperStyled sx={{pt: 4}}>
@@ -57,7 +67,9 @@ export const ZDIEditor: React.FC = () => {
           </Grid>
           <Grid item xs={12} md={7}>
             <AsideLoader loading={loading}>
-              <ZCKEditor data={data} myRef={liveRef} />
+              <Stack onClick={() => handelClick(strippedHtml, isDataHaveBlue)}>
+                <ZCKEditor data={data} myRef={liveRef} />
+              </Stack>
             </AsideLoader>
           </Grid>
         </Grid>
