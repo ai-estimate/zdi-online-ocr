@@ -90,12 +90,7 @@ export const DocumentsLists: React.FC = () => {
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
-    setState({toCopy: 'Copied'});
-    setTimeout(() => {
-      setState({toCopy: 'Copy To Clipboard'});
-    }, 2000);
   };
-  const reverseItems = items?.reverse();
 
   return (
     <Container maxWidth="xl">
@@ -144,7 +139,7 @@ export const DocumentsLists: React.FC = () => {
                 <Typography>Document empty !</Typography>
               </Stack>
             )}
-            {reverseItems?.map((item: any, index: number) => {
+            {items?.map((item: any, index: number) => {
               const strippedHtml = item?.content
                 ?.replace(/<[^>]+>/g, '')
                 .replace(/&nbsp;/gi, '\n')

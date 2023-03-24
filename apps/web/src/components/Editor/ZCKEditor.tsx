@@ -11,9 +11,10 @@ interface IProps {
   myRef?: any;
   isEditerUI?: boolean;
   isBgcolor?: boolean;
+  readonly?: boolean;
 }
 export const ZCKEditor: React.FC<IProps> = React.memo(
-  ({data, myRef, onChange, isEditerUI, isBgcolor}) => {
+  ({data, myRef, onChange, isEditerUI, isBgcolor, readonly}) => {
     const saveContent = debounce(async (content) => {
       await onChange?.(content);
     }, 360);
@@ -30,6 +31,9 @@ export const ZCKEditor: React.FC<IProps> = React.memo(
         id="ctoolbar-editor">
         <CKEditor
           onReady={(editor: EditorType) => {
+            if (readonly) {
+              editor.enableReadOnlyMode('my-feature-id');
+            }
             if (isEditerUI) {
               editor.ui
                 .getEditableElement()

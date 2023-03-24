@@ -69,5 +69,5 @@ const StackStyled = styled(Stack)({
   height: 'auto',
   zIndex: 10,
   flex: 1,
-  cursor: 'copy',
+  cursor: 'default',
 });

@@ -68,7 +68,7 @@ export const ZDIEditor: React.FC = () => {
           <Grid item xs={12} md={7}>
             <AsideLoader loading={loading}>
               <Stack onClick={() => handelClick(strippedHtml, isDataHaveBlue)}>
-                <ZCKEditor data={data} myRef={liveRef} />
+                <ZCKEditor data={data} myRef={liveRef} readonly />
               </Stack>
             </AsideLoader>
           </Grid>
