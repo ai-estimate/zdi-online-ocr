@@ -9,7 +9,7 @@ import Document, {
 } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import {AppType} from 'next/app';
-import {inter} from '@zdi/mui';
+import {khmerFont} from '@zdi/mui';
 import createEmotionCache from 'src/createEmotionCache';
 import {MyAppProps} from './_app';
 
@@ -19,7 +19,10 @@ interface MyDocumentProps extends DocumentProps {
 
 export default function MyDocument({emotionStyleTags}: MyDocumentProps) {
   return (
-    <Html lang="en" className={inter.className}>
+    <Html
+      lang="en"
+      className={khmerFont.className}
+      style={{'--khmer-font-fontFamily': khmerFont.style.fontFamily} as any}>
       <Head>
         <meta name="theme-color" content="#ffffff" />
         <meta name="emotion-insertion-point" content="" />

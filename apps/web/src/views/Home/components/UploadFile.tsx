@@ -12,7 +12,6 @@ import {
 import {ZDINewCard} from './NewFile';
 import {useRouter} from 'next/router';
 import {nextSpellAPI} from './utils';
-import {TOP_NAV_HEIGHT} from 'src/components/Layout';
 
 export const UploadFile: React.FC = () => {
   const router = useRouter();
@@ -58,15 +57,12 @@ export const UploadFile: React.FC = () => {
       ) : (
         <>
           {IconAlerts(isFailed)}
-          {isLoading ? (
-            <ZDILoading />
-          ) : (
-            <ZDINewCard
-              title={'Image to text'}
-              onClick={open}
-              imagePath={'/assets/svgs/images_re.svg'}
-            />
-          )}
+          {isLoading && <ZDILoading />}
+          <ZDINewCard
+            title="រូបភាពទៅជាអត្ថបទ"
+            onClick={open}
+            imagePath={'/assets/svgs/images_re.svg'}
+          />
         </>
       )}
     </Stack>

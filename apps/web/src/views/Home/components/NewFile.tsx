@@ -12,28 +12,15 @@ export const NewFile: React.FC = () => {
   const handleNextSpell = () => {
     router.push(`/nextspell/${generate6RandomId()}`);
   };
-  const handlePDFToImage = () => {
-    console.log('handlePDFToImage:::');
-  };
 
   return (
-    <Container maxWidth="xl">
-      <Stack px={2} py={1}>
-        <Typography>Start a new document</Typography>
+    <Container maxWidth="lg">
+      <Stack px={1}>
+        <Typography>ចាប់ផ្តើមឯកសារថ្មី</Typography>
       </Stack>
-      <Stack
-        flexDirection={'row'}
-        gap={0.5}
-        sx={{
-          overflowX: 'auto',
-        }}>
+      <Stack flexDirection={'row'} gap={0.5} sx={{overflowX: 'auto'}}>
         <ZDINewCard onClick={handleNextSpell} title={'NextSpell'} />
         <UploadFile />
-        {/* <ZDINewCard
-          onClick={handlePDFToImage}
-          title={'PDF to text'}
-          imagePath="/assets/svgs/pdf_to_txt.svg"
-        /> */}
       </Stack>
     </Container>
   );

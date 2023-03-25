@@ -1,10 +1,6 @@
-export const createTypography = ({
-  inter,
-  breakpoints,
-  plusJakartaSans,
-}: any) => {
+export const createTypography = ({khmerFont, breakpoints}: any) => {
   return {
-    fontFamily: inter.style.fontFamily,
+    fontFamily: khmerFont.style.fontFamily,
     body1: {
       fontSize: '1rem',
       fontWeight: 400,
@@ -41,7 +37,7 @@ export const createTypography = ({
       textTransform: 'uppercase',
     },
     h1: {
-      fontFamily: plusJakartaSans.style.fontFamily,
+      fontFamily: khmerFont.style.fontFamily,
       fontWeight: 700,
       fontSize: '3.5rem',
       lineHeight: 1.2,
@@ -56,7 +52,7 @@ export const createTypography = ({
       },
     },
     h2: {
-      fontFamily: plusJakartaSans.style.fontFamily,
+      fontFamily: khmerFont.style.fontFamily,
       fontWeight: 700,
       fontSize: '3rem',
       lineHeight: 1.2,
@@ -71,7 +67,7 @@ export const createTypography = ({
       },
     },
     h3: {
-      fontFamily: plusJakartaSans.style.fontFamily,
+      fontFamily: khmerFont.style.fontFamily,
       fontWeight: 700,
       fontSize: '2.25rem',
       lineHeight: 1.2,
@@ -86,7 +82,7 @@ export const createTypography = ({
       },
     },
     h4: {
-      fontFamily: plusJakartaSans.style.fontFamily,
+      fontFamily: khmerFont.style.fontFamily,
       fontWeight: 700,
       fontSize: '2rem',
       lineHeight: 1.2,
@@ -101,7 +97,7 @@ export const createTypography = ({
       },
     },
     h5: {
-      fontFamily: plusJakartaSans.style.fontFamily,
+      fontFamily: khmerFont.style.fontFamily,
       fontWeight: 700,
       fontSize: '1.5rem',
       lineHeight: 1.2,
@@ -113,7 +109,7 @@ export const createTypography = ({
       },
     },
     h6: {
-      fontFamily: plusJakartaSans.style.fontFamily,
+      fontFamily: khmerFont.style.fontFamily,
       fontWeight: 700,
       fontSize: '1.125rem',
       lineHeight: 1.2,

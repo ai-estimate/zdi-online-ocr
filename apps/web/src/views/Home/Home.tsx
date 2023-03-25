@@ -6,7 +6,7 @@ import {DocumentsLists} from './components';
 export const Home: React.FC = () => {
   return (
     <>
-      <Stack pt={2} pb={4} bgcolor={'#f1f3f4'}>
+      <Stack pt={2} pb={2} bgcolor={'#f1f3f4'}>
         <NewFile />
       </Stack>
       <DocumentsLists />

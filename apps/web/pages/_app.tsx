@@ -19,7 +19,7 @@ const MyApp: React.FC<MyAppProps> = ({Component, ...rest}) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <title>NextSpell</title>
+        <title>កម្មវិធីអក្សរខ្មែរ</title>
       </Head>
       <ZDIThemeProvider>
         <SnackbarProvider maxSnack={3} autoHideDuration={16000}>

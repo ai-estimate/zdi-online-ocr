@@ -26,8 +26,7 @@ export const ZDIEditor: React.FC = () => {
     const message = data?.message;
     if (message) {
       liveRef.current?.setData(message);
-    }
-    if (!message) {
+    } else {
       liveRef.current?.setData('' || content);
     }
     setItemToLocalStorage('docs', {
@@ -52,10 +51,10 @@ export const ZDIEditor: React.FC = () => {
   }, []);
 
   return (
-    <EditorWraperStyled sx={{pt: 4}}>
+    <EditorWraperStyled sx={{pt: 4, px: 4}}>
       <Stack data-name="editorComponent">
-        <Grid container sx={{minHeight: '100%'}}>
-          <Grid item xs={12} md={5}>
+        <Grid container sx={{minHeight: '100%'}} spacing={2}>
+          <Grid item xs={12} md={6}>
             <Box sx={{height: 4, bgcolor: '#f9f0e5'}} />
             <ZCKEditor
               data={strippedHtml}
@@ -65,7 +64,7 @@ export const ZDIEditor: React.FC = () => {
               isBgcolor={true}
             />
           </Grid>
-          <Grid item xs={12} md={7}>
+          <Grid item xs={12} md={6}>
             <AsideLoader loading={loading}>
               <Stack onClick={() => handelClick(strippedHtml, isDataHaveBlue)}>
                 <ZCKEditor data={data} myRef={liveRef} readonly />

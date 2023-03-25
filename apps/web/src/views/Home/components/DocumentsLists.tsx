@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {alpha, styled} from '@mui/material/styles';
 import useStates from 'src/hooks/useState';
 import {
@@ -17,19 +17,13 @@ import {useRouter} from 'next/router';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VoidSvg from '@components/svgs/void_.svg';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import {Koh_Santepheap} from 'next/font/google';
 import ChatIcon from '@mui/icons-material/Chat';
+import {Footer} from '@components/Layout/Footer';
 
 let localStorage: any = {getItem: () => null, setItem: () => null};
 if (typeof window !== 'undefined') {
   localStorage = window.localStorage;
 }
-
-const khmerFont = Koh_Santepheap({
-  weight: ['300', '400', '700'],
-  subsets: ['latin', 'khmer'],
-  display: 'swap',
-});
 
 export const DocumentsLists: React.FC = () => {
   const router = useRouter();
@@ -93,135 +87,107 @@ export const DocumentsLists: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="xl">
-      <Stack
-        position={'sticky'}
-        top={64}
-        flexDirection="row"
-        alignItems="center"
-        sx={{
-          backdropFilter: 'blur(6px)',
-          backgroundColor: (theme) =>
-            alpha(theme.palette.background.default, 0.8),
-          py: 2,
-          zIndex: 2,
-        }}
-        color={'black'}
-        justifyContent={'space-between'}>
-        <Typography variant="h6">Recent documents </Typography>
-        <div>
-          <Tooltip title={`Sort by name ${sort}`}>
-            <IconButton onClick={handleSort}>
-              <SortByAlphaIcon />
-            </IconButton>
-          </Tooltip>
-        </div>
-      </Stack>
-      <Grid sx={{flexGrow: 1}} container spacing={2}>
-        <Grid
-          item
-          xs={12}
+    <>
+      <Container maxWidth="lg">
+        <Stack
+          flexDirection="row"
+          alignItems="center"
           sx={{
-            pb: 5,
-          }}>
-          <Grid container spacing={2}>
-            {items?.length == 0 && (
-              <Stack
-                sx={{
-                  pt: 4,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flex: 1,
-                }}>
-                <ImproSvgStyled>
-                  <VoidSvg />
-                </ImproSvgStyled>
-                <Typography>Document empty !</Typography>
-              </Stack>
-            )}
-            {items?.map((item: any, index: number) => {
-              const strippedHtml = item?.content
-                ?.replace(/<[^>]+>/g, '')
-                .replace(/&nbsp;/gi, '\n')
-                .trim();
-              return (
-                <Grid
-                  key={index}
-                  item
-                  position={'relative'}
+            backdropFilter: 'blur(6px)',
+            backgroundColor: (theme) =>
+              alpha(theme.palette.background.default, 0.8),
+            py: 2,
+            zIndex: 2,
+          }}
+          color={'black'}
+          justifyContent={'space-between'}>
+          <Typography variant="h6">ឯកសារថ្មីៗ</Typography>
+          <div>
+            <Tooltip title={`Sort by name ${sort}`}>
+              <IconButton onClick={handleSort}>
+                <SortByAlphaIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
+        </Stack>
+        <Grid sx={{flexGrow: 1}} container spacing={2}>
+          <Grid item xs={12} sx={{pb: 5}}>
+            <Grid container spacing={2}>
+              {items?.length == 0 && (
+                <Stack
                   sx={{
-                    width: 230,
-                    height: 358,
+                    pt: 4,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flex: 1,
                   }}>
-                  <Paper
-                    sx={{
-                      cursor: 'pointer',
-                      width: 210,
-                      height: 338,
-                      m: 1,
-                      borderRadius: 0.5,
-                      display: 'revert',
-                      borderColor: 'grey.300',
-                      boxShadow: 2,
-                      ':hover': {
-                        borderColor: 'darkblue',
-                      },
-                    }}
-                    variant="outlined"
-                    onClick={() => handleEdit(item)}>
-                    <Stack height={263}>
-                      <TypographyStyled
-                        m={2}
-                        sx={{
-                          textOverflow: 'ellipsis',
-                          overflow: 'hidden',
-                        }}>
-                        {strippedHtml}
-                      </TypographyStyled>
-                    </Stack>
-                    <Divider />
-                    <Stack
+                  <ImproSvgStyled>
+                    <VoidSvg />
+                  </ImproSvgStyled>
+                  <Typography>Document empty!</Typography>
+                </Stack>
+              )}
+              {items?.map((item: any, index: number) => {
+                const strippedHtml = item?.content
+                  ?.replace(/<[^>]+>/g, '')
+                  .replace(/&nbsp;/gi, '\n')
+                  .trim();
+                return (
+                  <Grid key={index} item position="relative" sx={{width: 250}}>
+                    <Paper
                       sx={{
-                        pl: 1.5,
-                        pr: 1,
-                        pt: 2,
+                        cursor: 'pointer',
+                        m: 1,
+                        borderRadius: 0.5,
+                        display: 'revert',
+                        borderColor: 'grey.300',
+                        boxShadow: 2,
+                        ':hover': {
+                          borderColor: 'darkblue',
+                        },
                       }}
-                      height={75}>
-                      <TypographyStyled noWrap>{item.title}</TypographyStyled>
-                    </Stack>
-                  </Paper>
-                  <Stack
-                    flexDirection={'row'}
-                    justifyContent={'flex-end'}
-                    sx={{
-                      position: 'absolute',
-                      display: 'block',
-                      right: 0,
-                      bottom: 0,
-                    }}>
-                    <Tooltip title={toCopy}>
-                      <StyledIconButton
-                        size="small"
-                        onClick={() => copyToClipboard(item)}>
-                        <ContentCopyIcon />
-                      </StyledIconButton>
-                    </Tooltip>
-                    <Tooltip title={'Delete'}>
-                      <StyledIconButton
-                        size="small"
-                        onClick={() => handleDelete(item)}>
-                        <DeleteIcon />
-                      </StyledIconButton>
-                    </Tooltip>
-                  </Stack>
-                </Grid>
-              );
-            })}
+                      variant="outlined">
+                      <Stack
+                        sx={{minHeight: 250, maxHeight: 250}}
+                        onClick={() => handleEdit(item)}>
+                        <TypographyStyled
+                          m={2}
+                          sx={{textOverflow: 'ellipsis', overflow: 'hidden'}}>
+                          {strippedHtml}
+                        </TypographyStyled>
+                      </Stack>
+                      <Divider />
+                      <Stack sx={{p: 1}}>
+                        <Stack
+                          flexDirection={'row'}
+                          justifyContent={'flex-end'}>
+                          <Tooltip title={toCopy}>
+                            <StyledIconButton
+                              size="small"
+                              onClick={() => copyToClipboard(item)}>
+                              <ContentCopyIcon />
+                            </StyledIconButton>
+                          </Tooltip>
+                          <Tooltip title={'Delete'}>
+                            <StyledIconButton
+                              size="small"
+                              onClick={() => handleDelete(item)}>
+                              <DeleteIcon />
+                            </StyledIconButton>
+                          </Tooltip>
+                        </Stack>
+                      </Stack>
+                    </Paper>
+                  </Grid>
+                );
+              })}
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      <ZDIChat />
-    </Container>
+        <ZDIChat />
+      </Container>
+      <Footer />
+    </>
   );
 };
 
@@ -233,13 +199,13 @@ const StyledIconButton = styled(IconButton)({
 
 const ImproSvgStyled = styled(Box)({
   svg: {
-    width: '16rem !important',
-    height: '16rem !important',
+    width: '14rem !important',
+    height: '14rem !important',
   },
 });
 
 const TypographyStyled = styled(Typography)({
-  fontFamily: khmerFont.style.fontFamily,
+  fontFamily: 'var(--khmer-font-fontFamily)',
 });
 
 const ZDIChat = () => {
@@ -254,6 +220,7 @@ const ZDIChat = () => {
         position: 'fixed',
         bottom: 20,
         right: 20,
+        zIndex: 12,
       }}>
       <Tooltip title={'Chat with ZDI Chatbot AI'} placement="left">
         <IconButton

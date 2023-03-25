@@ -2,14 +2,17 @@ import React from 'react';
 import {Box, Button, Container, Stack, Typography} from '@mui/material';
 import {alpha} from '@mui/material/styles';
 import {useRouter} from 'next/router';
+import PhoneIcon from '@mui/icons-material/Phone';
+
 export const SIDE_NAV_WIDTH = 280;
 export const TOP_NAV_HEIGHT = 64;
 
 interface ILayoutProps {
   children: React.ReactNode;
   branch?: string;
+  sx?: any;
 }
-export const Layout: React.FC<ILayoutProps> = ({children, branch}) => {
+export const Layout: React.FC<ILayoutProps> = ({children, branch, sx = {}}) => {
   const router = useRouter();
   const handleGoHome = () => {
     router.push('/');
@@ -25,6 +28,7 @@ export const Layout: React.FC<ILayoutProps> = ({children, branch}) => {
           position: 'sticky',
           top: 0,
           zIndex: (theme) => theme.zIndex.appBar,
+          ...sx,
         }}>
         <Stack
           alignItems="center"
@@ -34,16 +38,30 @@ export const Layout: React.FC<ILayoutProps> = ({children, branch}) => {
           sx={{minHeight: TOP_NAV_HEIGHT}}>
           <Box sx={{px: 4}}>
             <Button onClick={handleGoHome}>
-              <img src="https://nextspell.com/logo.png" />
+              {branch ? (
+                <Typography>{branch}</Typography>
+              ) : (
+                <img src="https://nextspell.com/logo.png" />
+              )}
             </Button>
           </Box>
+          <Stack
+            sx={{pr: 4.5}}
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            spacing={0.5}>
+            <PhoneIcon sx={{fontSize: 18}} />
+            <Typography variant="body2" component="a" href="tel:095333409">
+              095-333-409
+            </Typography>
+          </Stack>
         </Stack>
       </Box>
       <Box
         sx={{
           width: '100%',
           height: '100%',
-          px: 4,
           '--nav-height': `${TOP_NAV_HEIGHT}px`,
         }}>
         {children}

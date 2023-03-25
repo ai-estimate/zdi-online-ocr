@@ -15,7 +15,7 @@ interface IProps {
   children?: any;
 }
 export const AsideLoader: React.FC<IProps> = React.memo(
-  ({loading, data, children}) => {
+  ({loading, children}) => {
     return (
       <StackStyled
         justifyContent="center"
@@ -33,7 +33,7 @@ export const AsideLoader: React.FC<IProps> = React.memo(
             <Box sx={{height: 4}}></Box>
           </>
         )}
-        <Stack sx={{px: 8, width: '100%'}}>{children}</Stack>
+        <Stack sx={{width: '100%'}}>{children}</Stack>
       </StackStyled>
     );
   },

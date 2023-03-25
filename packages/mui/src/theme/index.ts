@@ -1,22 +1,14 @@
 import {createTheme, Theme} from '@mui/material/styles';
-import {Inter, Plus_Jakarta_Sans} from 'next/font/google';
 import {createTypography} from './typography';
 import {createPalette} from './palette';
 import {createComponents} from './components';
 import {createShadows} from './shadows';
+import {Koh_Santepheap} from 'next/font/google';
 
-const plusJakartaSans = Plus_Jakarta_Sans({
-  weight: ['300', '400', '500', '700'],
-  subsets: ['latin'],
+export const khmerFont = Koh_Santepheap({
+  weight: ['300', '400', '700'],
+  subsets: ['latin', 'khmer'],
   display: 'swap',
-  fallback: ['Helvetica', 'Arial', 'sans-serif', 'DefaultFont'],
-});
-
-export const inter = Inter({
-  weight: ['300', '400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  fallback: ['Helvetica', 'Arial', 'sans-serif', 'DefaultFont'],
 });
 
 const palette: any = createPalette();
@@ -36,7 +28,7 @@ export const {breakpoints} = createTheme({breakpoints: _breakpoints});
 // Create a theme instance.
 export default createTheme({
   breakpoints: _breakpoints as Theme['breakpoints'],
-  typography: createTypography({inter, plusJakartaSans, breakpoints}) as any,
+  typography: createTypography({khmerFont, breakpoints}) as any,
   palette,
   components: createComponents({palette}) as Theme['components'],
   shape: {borderRadius: 8},
