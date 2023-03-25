@@ -34,7 +34,7 @@ export const Layout: React.FC<ILayoutProps> = ({children, branch}) => {
           sx={{minHeight: TOP_NAV_HEIGHT}}>
           <Box sx={{px: 4}}>
             <Button onClick={handleGoHome}>
-              <Typography variant="h4">{branch || 'NextSpell'}</Typography>
+              <img src="https://nextspell.com/logo.png" />
             </Button>
           </Box>
         </Stack>

@@ -25,12 +25,9 @@ export const UploadFile: React.FC = () => {
   const onDrop = useCallback(
     async (acceptedFiles: any) => {
       // Do something with the files
-
       if (acceptedFiles) {
         setState({isLoading: true});
-
         const resp = await nextSpellAPI(acceptedFiles[0]);
-
         setState({isLoading: false});
         if (resp != null) {
           router.replace(`/nextspell/${resp}`);
@@ -61,8 +58,9 @@ export const UploadFile: React.FC = () => {
       ) : (
         <>
           {IconAlerts(isFailed)}
-          {isLoading && <ZDILoading />}
-          {!isLoading && (
+          {isLoading ? (
+            <ZDILoading />
+          ) : (
             <ZDINewCard
               title={'Image to text'}
               onClick={open}
@@ -116,33 +114,32 @@ export default function IconAlerts(open: boolean) {
 
 const ZDILoading: React.FC = () => {
   return (
-    <Paper
+    <Stack
       sx={{
-        cursor: 'progress',
-        width: 'calc(100% - 20px)',
-        height: `calc(100% - 10px - ${TOP_NAV_HEIGHT}px)`,
-        borderRadius: 0.5,
-        borderColor: 'grey.500',
-        justifyContent: 'center',
-        display: 'flex',
-        position: 'fixed',
-        top: `${TOP_NAV_HEIGHT}`,
-        bottom: 10,
-        right: 10,
-        left: 10,
-        zIndex: 1100,
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        zIndex: 112,
+        backgroundColor: 'rgb(0 0 0 / 14%)',
       }}
-      variant="outlined">
+      justifyContent="center"
+      alignItems="center">
       <Stack
+        justifyContent="center"
+        alignItems="center"
         sx={{
-          alignItems: 'center',
-          alignSelf: 'center',
+          backgroundColor: '#fff',
+          p: 4,
+          borderRadius: 1,
+          boxShadow: '0px 1px 5px rgba(0, 0, 0, 0.08)',
         }}>
-        <CircularProgress sx={{color: 'darkblue'}} size={120} />
-        <Typography pt={2} variant="h5">
+        <CircularProgress sx={{color: 'darkblue'}} size={50} />
+        <Typography pt={2} variant="body2">
           Uploading ...
         </Typography>
       </Stack>
-    </Paper>
+    </Stack>
   );
 };

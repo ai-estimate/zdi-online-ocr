@@ -7,15 +7,15 @@ export const nextSpellAPI = async (data: any) => {
   if (source) source?.cancel('Operation canceled by the user.');
   source = CancelToken.source();
   try {
-    console.log('data:::', data);
     let formData = new FormData();
     formData.append('file', data);
-    const resp = await axios.post('/api/khmerocr_api', formData, {
+    const resp = await axios({
+      method: 'POST',
+      url: '/api/khmerocr_api',
+      data: formData,
       headers: {
         'Content-Type': 'multipart/form-data',
-        'Access-Control-Allow-Origin': '*',
       },
-      // cancelToken: source.token,
     });
     const _id = generate6RandomId();
     if (resp.status === 200) {
