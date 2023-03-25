@@ -15,7 +15,7 @@
     "@hookstate/core": "*",
     "@mui/icons-material": "*",
     "@mui/lab": "*",
-    "@mui/material": "^5.11.13",
+    "@mui/material": "^5.11.14",
     "@mui/styles": "^5.11.13",
     "lodash": "*",
     "moment": "^2.29.4",
@@ -27,7 +27,7 @@
   "devDependencies": {
     "@types/jest": "29.5.0",
     "@types/lodash": "*",
-    "@types/node": "18.15.5",
+    "@types/node": "18.15.9",
     "@types/react": "*",
     "@types/react-dom": "*",
     "eslint": "^8.36.0",

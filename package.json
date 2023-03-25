@@ -19,7 +19,7 @@
     "eslint-config-custom": "workspace:*",
     "prettier": "latest",
     "turbo": "latest",
-    "release-it": "^15.9.0"
+    "release-it": "^15.9.3"
   },
   "engines": {
     "node": ">=14.0.0"

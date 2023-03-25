@@ -29,8 +29,6 @@ let config = {
   reactStrictMode: true,
 };
 
-let withConfig = withSvgr(config);
-
 const withPWA = require('next-pwa')({
   disable: !isProd,
   dest: 'public',
@@ -38,4 +36,4 @@ const withPWA = require('next-pwa')({
   skipWaiting: true,
 });
 
-module.exports = withConfig; //withPWA(withConfig);
+module.exports = withSvgr(withPWA(config));

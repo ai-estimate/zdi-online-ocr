@@ -1,13 +1,6 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import {Koh_Santepheap} from 'next/font/google';
 import {Box} from '@mui/material';
-
-const khmerFont = Koh_Santepheap({
-  weight: ['300', '400', '700'],
-  subsets: ['latin', 'khmer'],
-  display: 'swap',
-});
 
 const ZDIEditor = dynamic(
   () => import('@components/Editor').then(({ZDIEditor}) => ZDIEditor),
@@ -16,7 +9,7 @@ const ZDIEditor = dynamic(
 
 export const NextSpellEditor: React.FC = () => {
   return (
-    <Box sx={{'--kh-font-family': khmerFont.style.fontFamily}}>
+    <Box sx={{'--kh-font-family': 'var(--khmer-font-fontFamily)'}}>
       <ZDIEditor />
     </Box>
   );
