@@ -3,7 +3,7 @@ import axios from 'axios';
 import formidable from 'formidable';
 import fs from 'fs';
 
-const API_URL = 'http://api.nextspell.com/khmerocr_api';
+const API_URL = 'http://api.nextspell.com/khm-ocr2';
 
 import {NextApiRequest, NextApiResponse, PageConfig} from 'next';
 export const config = {

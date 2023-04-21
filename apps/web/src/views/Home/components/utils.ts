@@ -20,15 +20,18 @@ export const nextSpellAPI = async (data: any) => {
     const _id = generate6RandomId();
     if (resp.status === 200) {
       const {data} = resp;
-      setItemToLocalStorage('docs', {
-        id: _id,
-        title: _id,
-        content: data?.message,
-      });
+      const is = data.includes('no text, try again');
+      if (is === true) {
+        return undefined;
+      } else {
+        setItemToLocalStorage('docs', {
+          id: _id,
+          title: _id,
+          content: data,
+        });
+        return _id;
+      }
     }
-    console.log('resp:::', resp);
-
-    return _id;
   } catch (error) {
     return null;
   }
