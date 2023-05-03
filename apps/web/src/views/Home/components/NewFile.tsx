@@ -46,6 +46,9 @@ export const ZDINewCard = (props: IProps) => {
           borderRadius: 0.5,
           boxShadow: 2,
           borderColor: 'grey.300',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           ':hover': {
             borderColor: 'darkblue',
             boxShadow: 3,
@@ -54,7 +57,6 @@ export const ZDINewCard = (props: IProps) => {
         variant="outlined"
         onClick={onClick}>
         <ImageStyled
-          className="px-10"
           src={imagePath || '/assets/svgs/add_files.svg'}
           width={144}
           height={186}

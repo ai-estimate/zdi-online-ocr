@@ -32,10 +32,15 @@ export const Layout: React.FC<ILayoutProps> = ({children, branch, sx = {}}) => {
         }}>
         <Stack
           alignItems="center"
-          direction="row"
+          direction={{xs: 'column', sm: 'row'}}
           justifyContent="space-between"
           spacing={2}
-          sx={{minHeight: TOP_NAV_HEIGHT}}>
+          sx={{
+            minHeight: TOP_NAV_HEIGHT,
+            '& img': {
+              width: {xs: 100, sm: 200},
+            },
+          }}>
           <Box sx={{px: 4}}>
             <Button onClick={handleGoHome}>
               {branch ? (
@@ -46,7 +51,7 @@ export const Layout: React.FC<ILayoutProps> = ({children, branch, sx = {}}) => {
             </Button>
           </Box>
           <Stack
-            sx={{pr: 4.5}}
+            pr={{xs: 0, sm: 4.5}}
             direction="row"
             alignItems="center"
             justifyContent="center"
