@@ -5,6 +5,7 @@ import createEmotionCache from '../src/createEmotionCache';
 import ZDIThemeProvider from '@zdi/mui';
 import {CacheProvider, EmotionCache} from '@emotion/react';
 import Head from 'next/head';
+import '@/styles/globals.css';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
