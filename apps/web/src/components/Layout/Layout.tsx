@@ -50,16 +50,27 @@ export const Layout: React.FC<ILayoutProps> = ({children, branch, sx = {}}) => {
               )}
             </Button>
           </Box>
-          <Stack
-            pr={{xs: 0, sm: 4.5}}
-            direction="row"
-            alignItems="center"
-            justifyContent="center"
-            spacing={0.5}>
-            <PhoneIcon sx={{fontSize: 18}} />
-            <Typography variant="body2" component="a" href="tel:095333409">
-              095-333-409
-            </Typography>
+          <Stack flexDirection={'row'}>
+            <Box sx={{px: 4}}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => router.push('/plans')}>
+                <Typography>Plans</Typography>
+              </Button>
+            </Box>
+
+            <Stack
+              pr={{xs: 0, sm: 4.5}}
+              direction="row"
+              alignItems="center"
+              justifyContent="center"
+              spacing={0.5}>
+              <PhoneIcon sx={{fontSize: 18}} />
+              <Typography variant="body2" component="a" href="tel:095333409">
+                095-333-409
+              </Typography>
+            </Stack>
           </Stack>
         </Stack>
       </Box>
