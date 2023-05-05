@@ -46,10 +46,7 @@
     "react-dropzone": "^14.2.3",
     "react-final-form": "^6.5.9",
     "react-final-form-arrays": "^3.1.4",
-    "sass": "^1.62.1",
-    "autoprefixer": "10.4.14",
-    "postcss": "8.4.23",
-    "tailwindcss": "3.3.2"
+    "sass": "^1.62.1"
   },
   "devDependencies": {
     "@types/ckeditor__ckeditor5-build-decoupled-document": "^29.1.1",

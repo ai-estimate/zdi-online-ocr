@@ -9,7 +9,6 @@ import Document, {
 } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import {AppType} from 'next/app';
-import {khmerFont} from '@zdi/mui';
 import createEmotionCache from 'src/createEmotionCache';
 import {MyAppProps} from './_app';
 
@@ -19,10 +18,7 @@ interface MyDocumentProps extends DocumentProps {
 
 export default function MyDocument({emotionStyleTags}: MyDocumentProps) {
   return (
-    <Html
-      lang="en"
-      className={khmerFont.className}
-      style={{'--khmer-font-fontFamily': khmerFont.style.fontFamily} as any}>
+    <Html lang="en">
       <Head>
         <meta name="theme-color" content="#ffffff" />
         <meta name="emotion-insertion-point" content="" />
@@ -46,9 +42,10 @@ export default function MyDocument({emotionStyleTags}: MyDocumentProps) {
         <link rel="manifest" href="/favicon/site.webmanifest" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
         {emotionStyleTags}
       </Head>
-      <body>
+      <body className="font-sans antialiased text-gray-900 bg-gray-50">
         <Main />
         <NextScript />
       </body>

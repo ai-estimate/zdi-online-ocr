@@ -1,6 +1,6 @@
 export const createTypography = ({khmerFont, breakpoints}: any) => {
   return {
-    fontFamily: khmerFont.style.fontFamily,
+    fontFamily: 'inherit',
     body1: {
       fontSize: '1rem',
       fontWeight: 400,

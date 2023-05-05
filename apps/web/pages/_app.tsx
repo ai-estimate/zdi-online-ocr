@@ -1,11 +1,11 @@
 import React from 'react';
+import 'tailwindcss/tailwind.css';
 import {AppProps} from 'next/app';
 import {SnackbarProvider} from 'notistack';
 import createEmotionCache from '../src/createEmotionCache';
 import ZDIThemeProvider from '@zdi/mui';
 import {CacheProvider, EmotionCache} from '@emotion/react';
 import Head from 'next/head';
-import '@/styles/globals.css';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
