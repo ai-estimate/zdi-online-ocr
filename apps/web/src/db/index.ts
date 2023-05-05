@@ -1,8 +1,8 @@
 import Dexie, {Table} from 'dexie';
-import 'dexie-export-import';
+// import 'dexie-export-import';
 
 export interface User {
-  id: string;
+  id?: number;
   firstName: string;
   lastName: string;
   phoneNumer: string;
@@ -11,7 +11,7 @@ export interface User {
 }
 
 export interface CrurentPlan {
-  id: string;
+  id: number;
   name: string;
   description: string;
   createdAt: Date;
@@ -19,11 +19,12 @@ export interface CrurentPlan {
 }
 
 export interface CrurentUser {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
   phoneNumer: string;
   email: string;
+  islogin: boolean;
 }
 
 // connect to database with user table and crurentPlan table
@@ -34,10 +35,10 @@ export class Database extends Dexie {
 
   constructor() {
     super('userDB');
-    this.version(2).stores({
-      users: 'id, firstName, lastName, phoneNumer, email, password',
-      crurentPlans: 'id name, description, createdAt',
-      crurentUsers: 'id, firstName, lastName, phoneNumer, email',
+    this.version(3).stores({
+      users: '++id, firstName, lastName, phoneNumer, email, password',
+      crurentPlans: '++id, name, description, createdAt',
+      crurentUsers: '++id, firstName, lastName, phoneNumer, email, islogin',
     });
   }
 }

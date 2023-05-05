@@ -29,6 +29,7 @@
     "@zdi/mui": "workspace:*",
     "axios": "^1.4.0",
     "classnames": "^2.3.2",
+    "dexie": "^3.2.3",
     "final-form": "^4.20.9",
     "final-form-arrays": "^3.1.0",
     "form-data": "^4.0.0",
