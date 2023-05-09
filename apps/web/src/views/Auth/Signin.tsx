@@ -1,9 +1,8 @@
 import React from 'react';
 import {Stack} from '@mui/material';
 import {useRouter} from 'next/router';
-import {ZDIInput} from '@/src/components/ZDIField';
+import {ZDIInput, ZDIInputPassword} from '@/src/components/ZDIField';
 import {Header} from './Header';
-import {db} from '@/src/db';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 
@@ -23,11 +22,11 @@ export const Signin: React.FC = () => {
   };
 
   const handleSignup = () => {
-    router.push('/auth/signup');
+    router.replace('/auth/signup');
   };
 
   const handleForgotPassword = () => {
-    router.push('/auth/forgot-password');
+    router.replace('/auth/forgot-password');
   };
 
   return (
@@ -53,23 +52,13 @@ export const Signin: React.FC = () => {
               />
 
               <div>
-                <div className="">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-gray-900">
-                    Password
-                  </label>
-                </div>
-                <div className="mt-2">
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
+                <ZDIInputPassword
+                  name="password"
+                  type="password"
+                  label="Password"
+                  autoComplete="current-password"
+                />
+
                 <div className="flex items-center justify-between mt-6">
                   <div className="flex items-center">
                     <input
