@@ -4,9 +4,15 @@ import {db} from '@/src/db';
 import {Header} from './Header';
 import {ZDIInput} from '@/src/components/ZDIField';
 import {useRouter} from 'next/router';
+import useState from '@/src/hooks/useState';
 
 export const Signup: React.FC = () => {
   const router = useRouter();
+  const [state, setState] = useState({
+    showPassword: false,
+  });
+
+  const {showPassword} = state;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -37,25 +43,27 @@ export const Signup: React.FC = () => {
     router.push('/auth/signin');
   };
 
-  return (
-    <Stack
-      sx={{
-        flex: 1,
-        justifyContent: 'center',
-      }}>
-      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        <Header label=" Sign in to your account" />
+  const handleShowPassword = () => {
+    setState({
+      showPassword: !showPassword,
+    });
+  };
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+  return (
+    <div className="flex flex-1 justify-center">
+      <div className="flex min-h-full flex-col justify-center">
+        <Header label=" Sign up your account" />
+
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-lg bg-white py-9 md:px-12 px-4 rounded-lg">
           <form
-            className="space-y-6"
+            className="space-y-4"
             action="#"
             // method="POST"
             onSubmit={handleSubmit}>
-            <Stack spacing={2} direction="row">
+            <div className="flex justify-between gap-4">
               <ZDIInput name="first-name" type="text" label="First name" />
               <ZDIInput name="last-name" type="text" label="Last name" />
-            </Stack>
+            </div>
 
             <ZDIInput
               name="email"
@@ -64,7 +72,12 @@ export const Signup: React.FC = () => {
               autoComplete="email"
             />
 
-            <ZDIInput name="phone-number" type="text" label="Phone number" />
+            <ZDIInput
+              name="phone-number"
+              type="number"
+              autoComplete="false"
+              label="Phone number"
+            />
             <div>
               <div className="flex items-center justify-between">
                 <label
@@ -77,7 +90,7 @@ export const Signup: React.FC = () => {
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -85,7 +98,25 @@ export const Signup: React.FC = () => {
               </div>
             </div>
 
-            <div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <input
+                  id="show-password"
+                  name="show-password"
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={handleShowPassword}
+                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                />
+                <label
+                  htmlFor="show-password"
+                  className="ml-2 block text-sm text-gray-900">
+                  Show password
+                </label>
+              </div>
+            </div>
+
+            <div className="pt-4">
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
@@ -104,6 +135,6 @@ export const Signup: React.FC = () => {
           </p>
         </div>
       </div>
-    </Stack>
+    </div>
   );
 };

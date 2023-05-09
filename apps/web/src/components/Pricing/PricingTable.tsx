@@ -56,9 +56,9 @@ export const PricingTable: React.FC = () => {
             </div>
           </div>
 
-          <div className="-mx-4 flex flex-wrap justify-center">
+          <div className="mx-4 flex flex-wrap justify-center">
             {priceList.map((item, index) => (
-              <div key={index} className="w-full px-4 md:w-1/2 lg:w-1/3">
+              <div key={index} className="w-full px-4 md:w-1/2 lg:w-1/3 px-3">
                 <div className="border-primary hover:border-[blue] shadow-pricing relative z-10 mb-10 overflow-hidden rounded-xl border border-opacity-20 bg-white py-10 px-8 sm:p-12 lg:py-10 lg:px-6 xl:p-12">
                   <span className="text-primary mb-4 block text-lg font-semibold">
                     {item.title}
