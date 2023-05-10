@@ -18,7 +18,12 @@ export const Signin: React.FC = () => {
       password: data.get('password'),
     });
 
-    // router.push('/');
+    try {
+    } catch (error) {
+      console.log('error::', error);
+    }
+
+    router.push('/home');
   };
 
   const handleSignup = () => {

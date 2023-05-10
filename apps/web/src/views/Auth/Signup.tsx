@@ -11,6 +11,12 @@ import {Stack} from '@mui/material';
 
 export const Signup: React.FC = () => {
   const router = useRouter();
+  const [state, setState] = React.useState({
+    error: '',
+    touched: false,
+  });
+
+  const {error, touched} = state;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -24,6 +30,18 @@ export const Signup: React.FC = () => {
     });
 
     try {
+      if (data.get('password') !== data.get('re-password')) {
+        setState({
+          error: 'Password mismatch',
+          touched: true,
+        });
+        throw new Error('Password mismatch');
+      } else {
+        setState({
+          error: '',
+          touched: false,
+        });
+      }
       // Add the new user!
     } catch (error) {
       console.log('error::', error);
@@ -87,6 +105,8 @@ export const Signup: React.FC = () => {
               label="Re-enter password"
               autoComplete="false"
               required
+              touched={touched}
+              error={error}
             />
 
             <div className="pt-4">
