@@ -1,7 +1,18 @@
 import Image from 'next/image';
 import {Popover} from '@headlessui/react';
+import {useRouter} from 'next/router';
 
 export const Hero: React.FC = () => {
+  const router = useRouter();
+
+  const handelSignin = () => {
+    router.replace('auth/signin');
+  };
+
+  const handelSignup = () => {
+    router.replace('auth/signup');
+  };
+
   return (
     <Popover className="relative">
       <div
@@ -21,12 +32,29 @@ export const Hero: React.FC = () => {
               </a>
             </div>
             <div className="hidden space-x-8 font-medium lg:block"></div>
-            <div className="hidden font-medium lg:block">
-              <a
-                href="#0"
-                className="transition-colors duration-300 hover:text-blue-600 ">
-                095-333-409
-              </a>
+            <div className="flex direction-row space-x-4  items-center justify-center">
+              <div className="hidden font-medium lg:block">
+                <button
+                  onClick={handelSignin}
+                  className="w-full px-6 py-1.5 transition duration-300 bg-blue-500 hover:bg-blue-600 shadow text-white font-semibold rounded-lg sm:w-auto">
+                  Sign in
+                </button>
+              </div>
+              <div className="hidden font-medium lg:block">
+                <button
+                  onClick={handelSignup}
+                  className="w-full px-6 py-1.5 transition duration-300 bg-blue-500 hover:bg-blue-600 shadow text-white font-semibold rounded-lg sm:w-auto">
+                  Get started for free
+                </button>
+              </div>
+
+              <div className="hidden font-medium lg:block">
+                <a
+                  href="#0"
+                  className="transition-colors duration-300 hover:text-blue-600 ">
+                  095-333-409
+                </a>
+              </div>
             </div>
           </header>
           <div className="mt-16 space-y-8 lg:mt-24 xl:mt-28">
@@ -38,7 +66,9 @@ export const Hero: React.FC = () => {
                 Easily. Efficiently. Accurately.
               </p>
             </div>
-            <button className="w-full px-8 py-3.5 transition duration-300 bg-blue-500 hover:bg-blue-600 shadow text-white font-semibold rounded-lg sm:w-auto">
+            <button
+              onClick={handelSignup}
+              className="w-full px-8 py-3.5 transition duration-300 bg-blue-500 hover:bg-blue-600 shadow text-white font-semibold rounded-lg sm:w-auto">
               Start free trial
             </button>
           </div>

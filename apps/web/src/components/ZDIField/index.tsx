@@ -89,6 +89,7 @@ export const ZDIInputPassword = (props: IInputFieldProps) => {
       showPassword: !showPassword,
     });
   };
+
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -96,6 +97,9 @@ export const ZDIInputPassword = (props: IInputFieldProps) => {
           htmlFor={name}
           className="block text-sm font-medium leading-6 text-gray-900">
           {label} {required && <span className="text-red-500">*</span>}
+          {error && touched && (
+            <span className="text-red-500 text-sm ml-2">{error}</span>
+          )}
         </label>
       </div>
       <div className="mt-2 relative">
