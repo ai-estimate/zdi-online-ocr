@@ -112,7 +112,12 @@ export const DocumentsLists: React.FC = () => {
         </Stack>
         <Grid sx={{flexGrow: 1}} container spacing={2}>
           <Grid item xs={12} sx={{pb: 5}}>
-            <Grid container spacing={2}>
+            <Grid
+              container
+              spacing={2}
+              sx={{
+                justifyContent: {xs: 'center', sm: 'flex-start'},
+              }}>
               {items?.length == 0 && (
                 <Stack
                   sx={{

@@ -1,8 +1,10 @@
 import React from 'react';
-import {Box, Button, Container, Stack, Typography} from '@mui/material';
+import {Box, Button, IconButton, Stack, Typography} from '@mui/material';
 import {alpha} from '@mui/material/styles';
 import {useRouter} from 'next/router';
 import PhoneIcon from '@mui/icons-material/Phone';
+import {ZDIBackgroundLetterAvatars} from 'src/components/Avater';
+import {ZDITransitionsPopper} from '../Popover';
 
 export const SIDE_NAV_WIDTH = 280;
 export const TOP_NAV_HEIGHT = 64;
@@ -14,9 +16,15 @@ interface ILayoutProps {
 }
 export const Layout: React.FC<ILayoutProps> = ({children, branch, sx = {}}) => {
   const router = useRouter();
+
   const handleGoHome = () => {
     router.push('/');
   };
+
+  const handelProfile = () => {
+    console.log('click::');
+  };
+
   return (
     <>
       <Box
@@ -50,18 +58,26 @@ export const Layout: React.FC<ILayoutProps> = ({children, branch, sx = {}}) => {
               )}
             </Button>
           </Box>
-          <Stack flexDirection={'row'}>
-            <Box sx={{px: 4}}>
+          <Stack
+            sx={{
+              flexDirection: {xs: 'column', sm: 'row'},
+              display: {xs: 'none', sm: 'flex'},
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 3,
+              px: 2,
+            }}>
+            <Box>
               <Button
                 variant="contained"
                 color="secondary"
+                size="small"
                 onClick={() => router.push('/plans')}>
                 <Typography>Plans</Typography>
               </Button>
             </Box>
 
             <Stack
-              pr={{xs: 0, sm: 4.5}}
               direction="row"
               alignItems="center"
               justifyContent="center"
@@ -71,6 +87,29 @@ export const Layout: React.FC<ILayoutProps> = ({children, branch, sx = {}}) => {
                 095-333-409
               </Typography>
             </Stack>
+
+            <ZDITransitionsPopper>
+              <div className="flex justify-center items-center flex-col">
+                <div className="flex flex-col justify-center items-center px-2 py-4">
+                  <IconButton onClick={handelProfile}>
+                    <ZDIBackgroundLetterAvatars name="Next Spell" />
+                  </IconButton>
+                  <Typography variant="body2" color={'gray'}>
+                    nextspell@gmail.com
+                  </Typography>
+                </div>
+                <div className="w-full h-0.5 bg-gray-300 my-1" />
+                <div className="flex flex-col justify-center items-center px-2 py-4">
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    size="small"
+                    onClick={() => router.push('/auth/signin')}>
+                    <Typography>Sign out</Typography>
+                  </Button>
+                </div>
+              </div>
+            </ZDITransitionsPopper>
           </Stack>
         </Stack>
       </Box>
