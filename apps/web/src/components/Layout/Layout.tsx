@@ -1,8 +1,25 @@
 import React from 'react';
-import {Box, Button, IconButton, Stack, Typography} from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Stack,
+  Typography,
+} from '@mui/material';
 import {alpha} from '@mui/material/styles';
 import {useRouter} from 'next/router';
+import MenuIcon from '@mui/icons-material/Menu';
+import HomeIcon from '@mui/icons-material/Home';
 import PhoneIcon from '@mui/icons-material/Phone';
+import LogoutIcon from '@mui/icons-material/Logout';
+import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import {ZDIBackgroundLetterAvatars} from 'src/components/Avater';
 import {ZDITransitionsPopper} from '../Popover';
 
@@ -25,6 +42,29 @@ export const Layout: React.FC<ILayoutProps> = ({children, branch, sx = {}}) => {
     console.log('click::');
   };
 
+  const handleLogout = () => {
+    router.push('/auth/login');
+  };
+
+  const [state, setState] = React.useState({
+    open: false,
+  });
+
+  const {open} = state;
+
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
+
+      setState({open: open});
+    };
+
   return (
     <>
       <Box
@@ -40,7 +80,7 @@ export const Layout: React.FC<ILayoutProps> = ({children, branch, sx = {}}) => {
         }}>
         <Stack
           alignItems="center"
-          direction={{xs: 'column', sm: 'row'}}
+          direction={{xs: 'row', sm: 'row'}}
           justifyContent="space-between"
           spacing={2}
           sx={{
@@ -60,12 +100,12 @@ export const Layout: React.FC<ILayoutProps> = ({children, branch, sx = {}}) => {
           </Box>
           <Stack
             sx={{
-              flexDirection: {xs: 'column', sm: 'row'},
+              flexDirection: 'row',
               display: {xs: 'none', sm: 'flex'},
               alignItems: 'center',
               justifyContent: 'center',
               gap: 3,
-              px: 2,
+              px: {xs: 0, sm: 4},
             }}>
             <Box>
               <Button
@@ -98,18 +138,58 @@ export const Layout: React.FC<ILayoutProps> = ({children, branch, sx = {}}) => {
                     nextspell@gmail.com
                   </Typography>
                 </div>
-                <div className="w-full h-0.5 bg-gray-300 my-1" />
+                <div className="w-full border-t border-gray-300" />
                 <div className="flex flex-col justify-center items-center px-2 py-4">
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    size="small"
-                    onClick={() => router.push('/auth/signin')}>
-                    <Typography>Sign out</Typography>
-                  </Button>
+                  <button
+                    className='className="w-full px-6 py-1.5 transition duration-300 bg-blue-500 hover:bg-blue-600 shadow text-white font-semibold rounded-lg sm:w-auto"'
+                    onClick={handleLogout}>
+                    Sign out
+                  </button>
                 </div>
               </div>
             </ZDITransitionsPopper>
+          </Stack>
+
+          <Stack
+            sx={{
+              flexDirection: {xs: 'row'},
+              display: {xs: 'flex', sm: 'none'},
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Button onClick={toggleDrawer(true)}>
+              <MenuIcon /> Menu
+            </Button>
+            <Drawer anchor={'right'} open={open} onClose={toggleDrawer(false)}>
+              <List>
+                {MENU_ITEMS.map((item, index) => (
+                  <ListItem key={index} disablePadding>
+                    <ListItemButton
+                      sx={{
+                        '&:hover': {
+                          backgroundColor: (theme) =>
+                            alpha(theme.palette.primary.main, 0.1),
+                        },
+                        bgcolor: (theme) =>
+                          router.pathname === item?.link
+                            ? alpha(theme.palette.primary.main, 0.1)
+                            : 'transparent',
+                      }}
+                      onClick={() => router.push(item?.link)}>
+                      <ListItemIcon>{item?.icon}</ListItemIcon>
+                      <ListItemText primary={item.label} />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+                <Divider />
+                <ListItemButton component="a" href="tel:095333409">
+                  <ListItemIcon>
+                    <PhoneIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="095-333-409" />
+                </ListItemButton>
+              </List>
+            </Drawer>
           </Stack>
         </Stack>
       </Box>
@@ -124,3 +204,21 @@ export const Layout: React.FC<ILayoutProps> = ({children, branch, sx = {}}) => {
     </>
   );
 };
+
+const MENU_ITEMS = [
+  {
+    label: 'Home',
+    icon: <HomeIcon />,
+    link: '/home',
+  },
+  {
+    label: 'Plans',
+    icon: <RequestQuoteIcon />,
+    link: '/plans',
+  },
+  {
+    label: 'Logout',
+    icon: <LogoutIcon />,
+    link: '/auth/signin',
+  },
+];
