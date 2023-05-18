@@ -83,7 +83,7 @@ export const PricingTable: React.FC = () => {
                     ))}
                   </div>
                   <button
-                    onClick={() => router.push('/')}
+                    // onClick={() => router.push('/')}
                     className="text-primary hover:bg-[blue] hover:border-primary block w-full rounded-md border border-[#D4DEFF] bg-transparent p-4 text-center text-base font-semibold transition hover:text-[white] hover:bg-opacity-90">
                     Get Started
                   </button>

@@ -5,33 +5,47 @@ import {ZDIInput, ZDIInputPassword} from '@/src/components/ZDIField';
 import {Header} from './Header';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import {useUser} from '@/lib/auth/useUser';
+import {z1DataApi as z1DataAPI} from 'lib/Apis';
+import nProgress from 'nprogress';
 
-export const Signin: React.FC = () => {
+const Signin = React.memo(() => {
+  const {setAuthToken} = useUser({unAuthenticated: true});
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    nProgress.start();
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const _data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
 
     try {
-    } catch (error) {
-      console.log('error::', error);
-    }
+      const {data}: any = await z1DataAPI.login(
+        _data.get('email'),
+        _data.get('password'),
+      );
+      setAuthToken(data);
 
-    router.push('/home');
+      const _next: any = router?.query?._next;
+      if (_next) {
+        router.replace(_next);
+        return;
+      }
+      router.push('/home');
+      nProgress.done();
+    } catch (error) {
+      const errMessage = error?.message;
+      console.log('errMessage::', errMessage);
+      nProgress.done();
+    }
   };
 
   const handleSignup = () => {
-    router.replace('/auth/signup');
+    router.replace('/signup');
   };
 
   const handleForgotPassword = () => {
-    router.replace('/auth/forgot-password');
+    router.replace('/forgot-password');
   };
 
   return (
@@ -43,16 +57,12 @@ export const Signin: React.FC = () => {
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <Header label="Sign in to your account" />
         <div className="flex flex-col ">
-          <div className="mt-10 sm:mx-auto sm:w-full md:max-w-lg md:py-9 md:bg-white md:px-9 rounded-md  ">
-            <form
-              className="space-y-6"
-              action="#"
-              // method="POST"
-              onSubmit={handleSubmit}>
+          <div className="mt-10 sm:mx-auto sm:w-full md:max-w-xl md:py-9 md:bg-white md:px-9 rounded-md  ">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <ZDIInput
                 name="email"
-                type="email"
-                label="Email address"
+                type="string"
+                label="Email address or phone number"
                 autoComplete="email"
               />
 
@@ -115,8 +125,8 @@ export const Signin: React.FC = () => {
               <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-lg">
                 <form
                   className="space-y-3"
-                  action="#"
-                  // method="POST"
+                  // action="#"
+                  method="POST"
                   onSubmit={handleSubmit}>
                   <div className="flex justify-between gap-2">
                     <button
@@ -150,7 +160,9 @@ export const Signin: React.FC = () => {
       </div>
     </Stack>
   );
-};
+});
+
+export default Signin;
 
 const StyledButton =
   'flex w-full justify-center rounded-md  px-3 py-1.5 text-sm font-semibold leading-6  shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 gap-3';

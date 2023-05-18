@@ -6,11 +6,11 @@ export const Hero: React.FC = () => {
   const router = useRouter();
 
   const handelSignin = () => {
-    router.replace('auth/signin');
+    router.replace('signin');
   };
 
   const handelSignup = () => {
-    router.replace('auth/signup');
+    router.replace('signup');
   };
 
   return (

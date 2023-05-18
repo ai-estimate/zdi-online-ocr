@@ -1,4 +1,6 @@
+import LayoutAuth from '@/src/components/LayoutAuth';
 import {Layout} from '@components/Layout';
+
 import dynamic from 'next/dynamic';
 const Plan = dynamic(() => import('@views/Plan').then(({Plan}) => Plan), {
   ssr: false,
@@ -6,9 +8,11 @@ const Plan = dynamic(() => import('@views/Plan').then(({Plan}) => Plan), {
 
 const PlanPage = () => {
   return (
-    <Layout>
-      <Plan />
-    </Layout>
+    <LayoutAuth>
+      <Layout>
+        <Plan />
+      </Layout>
+    </LayoutAuth>
   );
 };
 

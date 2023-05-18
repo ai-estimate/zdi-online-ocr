@@ -21,12 +21,14 @@ function stringToColor(string: string) {
 }
 
 function stringAvatar(name: string) {
+  if (name === null || name === undefined) return;
+
   if (name.split(' ').length === 1) {
     return {
       sx: {
         bgcolor: stringToColor(name),
       },
-      children: `${name.split(' ')[0][0]}`,
+      children: `${name.slice(0, 3).toUpperCase()}`,
     };
   }
 

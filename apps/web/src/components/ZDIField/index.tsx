@@ -44,7 +44,8 @@ export const ZDIInput = (props: IInputFieldProps) => {
     <div>
       <label
         htmlFor={name}
-        className="block text-sm font-medium leading-6 text-gray-900">
+        className={`block text-sm font-medium leading-6 text-gray-900
+        ${error && touched && 'text-red-500'}`}>
         {label} {required && <span className="text-red-500">*</span>}
       </label>
       <div className="mt-2">
@@ -54,8 +55,13 @@ export const ZDIInput = (props: IInputFieldProps) => {
           type={type}
           autoComplete={autoComplete}
           required={required}
-          className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          className={`block w-full rounded-md border-0 pl-2 pr-10 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
+            error && 'ring-red-400 focus:ring-2 focus:ring-red-600'
+          }`}
         />
+        {error && touched && (
+          <span className="text-red-500 text-xs">{error}</span>
+        )}
       </div>
     </div>
   );
@@ -95,11 +101,9 @@ export const ZDIInputPassword = (props: IInputFieldProps) => {
       <div className="flex items-center justify-between">
         <label
           htmlFor={name}
-          className="block text-sm font-medium leading-6 text-gray-900">
+          className={`block text-sm font-medium leading-6 text-gray-900
+        ${error && touched && 'text-red-500'}`}>
           {label} {required && <span className="text-red-500">*</span>}
-          {error && touched && (
-            <span className="text-red-500 text-sm ml-2">{error}</span>
-          )}
         </label>
       </div>
       <div className="mt-2 relative">
@@ -109,7 +113,9 @@ export const ZDIInputPassword = (props: IInputFieldProps) => {
           type={showPassword ? 'text' : type || 'password'}
           autoComplete={autoComplete}
           required
-          className="block w-full rounded-md border-0 pl-2 pr-10 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
+          className={`block w-full rounded-md border-0 pl-2 pr-10 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
+            error && 'ring-red-400 focus:ring-2 focus:ring-red-600'
+          }`}
         />
         <i className="absolute right-2 top-1">
           {showPassword ? (
@@ -124,6 +130,9 @@ export const ZDIInputPassword = (props: IInputFieldProps) => {
             />
           )}
         </i>
+        {error && touched && (
+          <span className="text-red-500 text-xs">{error}</span>
+        )}
       </div>
     </div>
   );
@@ -149,7 +158,8 @@ export const ZDIIPhoneInput = (props: IInputFieldProps) => {
     <div>
       <label
         htmlFor={name}
-        className="block text-sm font-medium leading-6 text-gray-900">
+        className={`block text-sm font-medium leading-6 text-gray-900
+        ${error && touched && 'text-red-500'}`}>
         {label} {required && <span className="text-red-500">*</span>}
       </label>
       <div className="mt-2 relative">
@@ -164,8 +174,15 @@ export const ZDIIPhoneInput = (props: IInputFieldProps) => {
           type={type}
           autoComplete={autoComplete}
           required={required}
-          className="block w-full rounded-md border-0 pl-12 pr-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          defaultValue={value}
+          placeholder={placeholder}
+          className={`block w-full rounded-md border-0 pl-12 pr-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
+            error && 'ring-red-400 focus:ring-2 focus:ring-red-600'
+          }`}
         />
+        {error && touched && (
+          <span className="text-red-500 text-xs">{error}</span>
+        )}
       </div>
     </div>
   );

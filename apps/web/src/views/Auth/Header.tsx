@@ -1,10 +1,12 @@
-import React from 'react';
+import {useRouter} from 'next/router';
+import React, {useEffect} from 'react';
 
 interface IProps {
   label: string;
 }
 export const Header = (props: IProps) => {
   const {label} = props;
+
   return (
     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
       <img

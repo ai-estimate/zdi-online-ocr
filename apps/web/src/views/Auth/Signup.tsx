@@ -1,36 +1,51 @@
 import React from 'react';
-import {db} from '@/src/db';
 import {Header} from './Header';
 import {
   ZDIIPhoneInput,
   ZDIInput,
   ZDIInputPassword,
 } from '@/src/components/ZDIField';
-import {useRouter} from 'next/router';
 import {Stack} from '@mui/material';
+import {useRouter} from 'next/router';
+import {z1DataApi as z1DataAPI} from 'lib/Apis';
+import useState from '@/src/hooks/useState';
 
 export const Signup: React.FC = () => {
   const router = useRouter();
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     error: '',
     touched: false,
+    errEmail: '',
+    errPhone: '',
   });
 
-  const {error, touched} = state;
+  const {error, touched, errEmail, errPhone} = state;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    console.log('data::', data);
+    var phonePlus = data.get('phone');
 
-    console.log({
+    if (phonePlus) {
+      phonePlus = phonePlus.toString();
+      if (phonePlus.charAt(0) !== '+') {
+        phonePlus = '+' + phonePlus;
+      }
+    }
+
+    const field = {
+      name: data.get('name'),
+      companyName: data.get('company-name'),
       email: data.get('email'),
-      password: data.get('password'),
-    });
+      phone: phonePlus,
+      password1: data.get('password1'),
+      password2: data.get('password2'),
+    };
+    console.log('field::', field);
 
     try {
-      if (data.get('password') !== data.get('re-password')) {
+      if (field.password1 !== field.password2) {
         setState({
           error: 'Password mismatch',
           touched: true,
@@ -42,14 +57,27 @@ export const Signup: React.FC = () => {
           touched: false,
         });
       }
-      // Add the new user!
+      const {data} = await z1DataAPI.register(field);
+      router.replace('/signin');
     } catch (error) {
       console.log('error::', error);
+      if (error.response?.data.email) {
+        setState({
+          errEmail: error.response.data.email[0],
+          touched: true,
+        });
+      }
+      if (error.response?.data.phone) {
+        setState({
+          errPhone: error.response.data.phone[0],
+          touched: true,
+        });
+      }
     }
   };
 
   const handleSignin = () => {
-    router.replace('/auth/signin');
+    router.replace('/signin');
   };
 
   return (
@@ -62,11 +90,7 @@ export const Signup: React.FC = () => {
         <Header label=" Sign up your account" />
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-lg bg-white py-9 md:px-12 px-4 rounded-lg">
-          <form
-            className="space-y-4"
-            action="#"
-            // method="POST"
-            onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <ZDIInput name="name" type="text" label="Name" required />
 
             <ZDIInput
@@ -82,25 +106,31 @@ export const Signup: React.FC = () => {
               label="Email address"
               autoComplete="email"
               required
+              touched={touched}
+              error={errEmail}
             />
 
             <ZDIIPhoneInput
-              name="phone-number"
-              type="number"
+              name="phone"
+              type="string"
               autoComplete="false"
               label="Phone number"
               required
+              value="+855"
+              placeholder="+855"
+              touched={touched}
+              error={errPhone}
             />
 
             <ZDIInputPassword
-              name="password"
+              name="password1"
               type="password"
               label="Password"
               required
             />
 
             <ZDIInputPassword
-              name="re-password"
+              name="password2"
               type="password"
               label="Re-enter password"
               autoComplete="false"
